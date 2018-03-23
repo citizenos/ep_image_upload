@@ -1,0 +1,14 @@
+{
+  "parts": [
+    {
+      "name": "ep_image_upload",
+      "client_hooks": {
+        "acePostWriteDomLineHTML": "ep_image_upload/static/js/clientHooks"
+      },
+      "hooks":{
+        "clientVars": "ep_image_upload/static/js/serverHooks"
+      }
+    }
+  ]
+}
+

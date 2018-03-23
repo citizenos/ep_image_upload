@@ -1,0 +1,37 @@
+{
+  "name": "ep_image_upload",
+  "description": "Upload images to amazon s3",
+  "version": "0.0.1",
+  "author": {
+    "name": "CitizenOS",
+    "email": "ilmar@citizenos.com",
+    "url": "Ilmar Tyrk"
+  },
+  "contributors": [],
+  "dependencies": {
+    "lodash": "^4.17.5",
+    "mime-types": "^2.1.18",
+    "uuid": "^3.2.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/citizenos/ep_image_upload.git"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "bugs": {
+    "url": "https://github.com/citizenos/ep_image_upload/issues"
+  },
+  "homepage": "https://github.com/citizenos/ep_image_upload",
+  "_id": "ep_image_upload@0.0.1",
+  "scripts": {},
+  "maintainers": [
+    {
+      "name": "Ilmar Tyrk",
+      "email": "ilmar@citizenos.com"
+    }
+  ],
+  "directories": {},
+  "readme": "ERROR: No README data found!"
+}
