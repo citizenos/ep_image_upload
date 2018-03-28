@@ -10,6 +10,7 @@
   "contributors": [],
   "dependencies": {
     "lodash": "^4.17.5",
+    "mime-db": "^1.33.0",
     "mime-types": "^2.1.18",
     "uuid": "^3.2.1"
   },
@@ -33,5 +34,8 @@
     }
   ],
   "directories": {},
-  "readme": "ERROR: No README data found!"
+  "readme": "ERROR: No README data found!",
+  "devDependencies": {
+    "eslint": "^4.19.1"
+  }
 }
