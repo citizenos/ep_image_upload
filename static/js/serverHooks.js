@@ -6,6 +6,7 @@
  * @see {@link http://etherpad.org/doc/v1.5.7/#index_server_side_hooks}
  */
 
+var eejs = require('ep_etherpad-lite/node/eejs/');
 var settings = require('ep_etherpad-lite/node/utils/Settings');
 var mimeDB = require('mime-db');
 
@@ -34,11 +35,16 @@ exports.clientVars = function (hook_name, args, cb) {
     return cb({ep_image_upload: pluginSettings});
 };
 
+exports.eejsBlock_editbarMenuRight = function (hook_name, args, cb) {
+    args.content = args.content + eejs.require("ep_image_upload/templates/editBarButtons.ejs");
+    return cb();
+}
+
 exports.padInitToolbar = function (hook_name, args) {
     var toolbar = args.toolbar;
     var addImageButton = toolbar.button({
         command: 'addImage',
-        class: 'buttonicon buttonicon-embed-media'
+        class: 'buttonicon ep_image_upload image_upload'
     });
 
     toolbar.registerButton('addImage', addImageButton);
