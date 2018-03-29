@@ -7,6 +7,7 @@
  */
 
 var eejs = require('ep_etherpad-lite/node/eejs/');
+var Changeset = require("ep_etherpad-lite/static/js/Changeset");
 var settings = require('ep_etherpad-lite/node/utils/Settings');
 var mimeDB = require('mime-db');
 
@@ -49,3 +50,23 @@ exports.padInitToolbar = function (hook_name, args) {
 
     toolbar.registerButton('addImage', addImageButton);
 };
+
+function _analyzeLine(alineAttrs, apool) {
+    var image = null;
+    if (alineAttrs) {
+        var opIter = Changeset.opIterator(alineAttrs);
+        if (opIter.hasNext()) {
+            var op = opIter.next();
+            image = Changeset.opAttributeValue(op, 'img', apool);
+        }
+    }
+    return image;
+}
+
+exports.getLineHTMLForExport = function (hook, context) {
+    var image = _analyzeLine(context.attribLine, context.apool);
+    var lineContent = context.lineContent;
+    if (image) {
+        context.lineContent = image;
+    }
+}
