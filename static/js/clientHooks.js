@@ -3,6 +3,7 @@
 var ace2_inner = require('ep_etherpad-lite/static/js/ace2_inner');
 var _ = require('ep_etherpad-lite/static/js/underscore');
 var imageUpload = require('ep_image_upload/static/js/imageUpload');
+var mime = require('ep_image_upload/static/js/lib/mime-type');
 
 var image = {
     removeImage: function (lineNumber) {
@@ -19,10 +20,63 @@ var image = {
     }
 };
 
+function checkFileType (type) {
+    var allowedExt = null;
+    if (clientVars.ep_image_upload) {
+        if (clientVars.ep_image_upload.fileTypes) {
+            allowedExt = clientVars.ep_image_upload.fileTypes;
+        }
+        if (clientVars.ep_image_upload.mimeDB) {
+            mime.init(clientVars.ep_image_upload.mimeDB);
+        }
+    }
+    var allowedTypes = [];
+    if (allowedExt) {
+        allowedExt.forEach(function (ext) {
+            var fileType = mime.getType(ext);
+            allowedTypes.push(fileType);
+        });
+        _.uniq(allowedTypes);
+
+        return allowedTypes.indexOf(type) > -1;
+    } else {
+        return type.match('image.*')
+    }
+}
+
+function checkFileSize(size) {
+    if (clientVars.ep_image_upload && clientVars.ep_image_upload.maxFileSize) {
+        return size <= clientVars.ep_image_upload.maxFileSize;
+    }
+
+    return true;
+}
+
+function checkFile (file) {
+    if (!file) {
+        return false;
+    }
+    if (checkFileSize(file.size)) {
+        var fileTypeValid = checkFileType(file.type);
+        if (!fileTypeValid) {
+            alert('Allowed filetypes are ' + (clientVars.ep_image_upload.fileTypes || 'image.*'));
+        }
+
+        return fileTypeValid;
+    } else {
+        alert('Maximum allowed image size is ' + clientVars.ep_image_upload.maxFileSize);
+
+        return false;
+    }
+
+    return false;
+}
+
 exports.postToolbarInit = function (hook_name, context) {
     if (!imageUpload.settings() && clientVars) {
         imageUpload.init(clientVars.ep_image_upload);
     }
+
     var editbar = context.toolbar; // toolbar is actually editbar - http://etherpad.org/doc/v1.5.7/#index_editbar
 
     editbar.registerCommand('addImage', function () {
@@ -35,7 +89,10 @@ exports.postToolbarInit = function (hook_name, context) {
                 return 'Please choose a file to upload first.';
             }
             var file = files[0];
-            if (file.type.match('image.*')) {
+            if (!checkFileSize(file.size)) {
+                console.log(file.size);
+            }
+            if (checkFile(file)) {
                 imageUpload.uploadImageToS3(file).on('complete', function (data) {
                     var path = data.request.params.Key;
                     var pathItems = path.split('/');
@@ -54,6 +111,7 @@ exports.postToolbarInit = function (hook_name, context) {
                     }, 'img', true);
                 });
             }
+
         });
         $(document).find('body').find('#imageInput').trigger('click');
     });

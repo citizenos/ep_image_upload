@@ -8,4 +8,6 @@ Plugin needs S3 config in etherpads settings.json file
       "bucket": "BUCKET_NAME",
       "baseFolder": "FOLDER_PATH"
     }
-  }
+  },
+"fileTypes": ["jpeg", "jpg", "bmp", "gif","png", ...etc], // if left blanck file mime type is checked to match image.*
+"maxFileSize": 5000000 //file size in bytes if not set there is no limit
