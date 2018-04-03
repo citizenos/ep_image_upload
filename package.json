@@ -1,11 +1,11 @@
 {
   "name": "ep_image_upload",
-  "description": "Upload images to amazon s3",
-  "version": "0.0.1",
+  "description": "Add images to etherpad",
+  "version": "1.0.0",
   "author": {
     "name": "CitizenOS",
     "email": "ilmar@citizenos.com",
-    "url": "Ilmar Tyrk"
+    "url": "https://github.com/citizenos"
   },
   "contributors": [],
   "dependencies": {

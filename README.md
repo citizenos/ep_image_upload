@@ -1,4 +1,5 @@
 This uses image input to add Images to etherpad, it's based on ep_copy_paste_images module but without drag drop functionality.
+Currently only amazon S3 is supported as storage.
 Plugin needs S3 config in etherpads settings.json file
 "ep_image_upload":{
     "s3":{
