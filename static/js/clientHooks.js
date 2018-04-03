@@ -59,12 +59,12 @@ function checkFile (file) {
     if (checkFileSize(file.size)) {
         var fileTypeValid = checkFileType(file.type);
         if (!fileTypeValid) {
-            alert('Allowed filetypes are ' + (clientVars.ep_image_upload.fileTypes || 'image.*'));
+            alert(window._('ep_image_upload.error.fileType') + (clientVars.ep_image_upload.fileTypes || 'image.*'));
         }
 
         return fileTypeValid;
     } else {
-        alert('Maximum allowed image size is ' + clientVars.ep_image_upload.maxFileSize);
+        alert(window._('ep_image_upload.error.fileSize') + clientVars.ep_image_upload.maxFileSize);
 
         return false;
     }

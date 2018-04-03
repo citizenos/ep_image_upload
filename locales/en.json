@@ -1,0 +1,4 @@
+{ 
+    "ep_image_upload.error.fileSize": "Maximum allowed image size is: ",
+    "ep_image_upload.error.fileType": "Allowed filetypes are : "
+}
