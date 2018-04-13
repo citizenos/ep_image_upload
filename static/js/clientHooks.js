@@ -1,9 +1,6 @@
 'use strict';
 
-var ace2_inner = require('ep_etherpad-lite/static/js/ace2_inner');
 var _ = require('ep_etherpad-lite/static/js/underscore');
-var imageUpload = require('ep_image_upload/static/js/imageUpload');
-var mime = require('ep_image_upload/static/js/lib/mime-type');
 
 var image = {
     removeImage: function (lineNumber) {
@@ -20,63 +17,7 @@ var image = {
     }
 };
 
-function checkFileType (type) {
-    var allowedExt = null;
-    if (clientVars.ep_image_upload) {
-        if (clientVars.ep_image_upload.fileTypes) {
-            allowedExt = clientVars.ep_image_upload.fileTypes;
-        }
-        if (clientVars.ep_image_upload.mimeDB) {
-            mime.init(clientVars.ep_image_upload.mimeDB);
-        }
-    }
-    var allowedTypes = [];
-    if (allowedExt) {
-        allowedExt.forEach(function (ext) {
-            var fileType = mime.getType(ext);
-            allowedTypes.push(fileType);
-        });
-        _.uniq(allowedTypes);
-
-        return allowedTypes.indexOf(type) > -1;
-    } else {
-        return type.match('image.*')
-    }
-}
-
-function checkFileSize(size) {
-    if (clientVars.ep_image_upload && clientVars.ep_image_upload.maxFileSize) {
-        return size <= clientVars.ep_image_upload.maxFileSize;
-    }
-
-    return true;
-}
-
-function checkFile (file) {
-    if (!file) {
-        return false;
-    }
-    if (checkFileSize(file.size)) {
-        var fileTypeValid = checkFileType(file.type);
-        if (!fileTypeValid) {
-            alert(window._('ep_image_upload.error.fileType') + (clientVars.ep_image_upload.fileTypes || 'image.*'));
-        }
-
-        return fileTypeValid;
-    } else {
-        alert(window._('ep_image_upload.error.fileSize') + clientVars.ep_image_upload.maxFileSize);
-
-        return false;
-    }
-
-    return false;
-}
-
 exports.postToolbarInit = function (hook_name, context) {
-    if (!imageUpload.settings() && clientVars) {
-        imageUpload.init(clientVars.ep_image_upload);
-    }
-
     var editbar = context.toolbar; // toolbar is actually editbar - http://etherpad.org/doc/v1.5.7/#index_editbar
 
     editbar.registerCommand('addImage', function () {
@@ -89,19 +30,25 @@ exports.postToolbarInit = function (hook_name, context) {
                 return 'Please choose a file to upload first.';
             }
             var file = files[0];
-            if (!checkFileSize(file.size)) {
-                console.log(file.size);
-            }
-            if (checkFile(file)) {
-                imageUpload.uploadImageToS3(file).on('complete', function (data) {
-                    var path = data.request.params.Key;
-                    var pathItems = path.split('/');
-                    pathItems.shift();
-                    var finalPath = imageUpload.getS3Path(pathItems.join('/'));
-                    // Now to insert the base64 encoded image into the pad
+
+            var formData = new FormData();
+
+            // add assoc key values, this will be posts values
+            formData.append('file', file, file.name);
+            formData.append('upload_file', true);
+
+            $.ajax({
+                type: 'POST',
+                url: '/p/' + clientVars.padId + '/pluginfw/ep_image_upload/upload',
+                xhr: function () {
+                    var myXhr = $.ajaxSettings.xhr();
+
+                    return myXhr;
+                },
+                success: function (data) {
                     context.ace.callWithAce(function (ace) {
                         var rep = ace.ace_getRep();
-                        ace.ace_addImage(rep, finalPath);
+                        ace.ace_addImage(rep, data);
                         var doc = ace.ace_getDocument();
                         var e = new KeyboardEvent('keydown', {
                             code: 'Enter',
@@ -109,8 +56,18 @@ exports.postToolbarInit = function (hook_name, context) {
                         });
                         doc.dispatchEvent(e);
                     }, 'img', true);
-                });
-            }
+                },
+                error: function (error) {
+                    console.log('ERROR', error);
+                    // handle error
+                },
+                async: true,
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                timeout: 60000
+            });
 
         });
         $(document).find('body').find('#imageInput').trigger('click');
