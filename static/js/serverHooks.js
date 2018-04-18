@@ -13,6 +13,7 @@ var Busboy = require('busboy');
 var StreamUpload = require('stream_upload');
 var uuid = require('uuid');
 var path = require('path');
+var fs = require('fs');
 
 /**
  * ClientVars hook
@@ -46,8 +47,22 @@ exports.clientVars = function (hook_name, args, cb) {
 };
 
 exports.eejsBlock_editbarMenuRight = function (hook_name, args, cb) {
-    var eejsContent = eejs.require("ep_image_upload/templates/editBarButtons.ejs");
+    var eejsContent = eejs.require('ep_image_upload/templates/editBarButtons.ejs');
     args.content += eejsContent;
+
+    return cb();
+};
+
+exports.eejsBlock_body = function (hook_name, args, cb) {
+    var modal = eejs.require('ep_image_upload/templates/modal.ejs', {}, module);
+    args.content += modal;
+
+    return cb();
+};
+
+exports.eejsBlock_styles = function (hook_name, args, cb) {
+    var style = eejs.require('ep_image_upload/templates/styles.ejs', {}, module);
+    args.content += style;
 
     return cb();
 };
@@ -95,22 +110,69 @@ exports.expressCreateServer = function (hook_name, context) {
 
         if (storageConfig) {
             var busboy = new Busboy({
-                headers: req.headers
+                headers: req.headers,
+                limits: {
+                    fileSize: Infinity
+                }
             });
+            console.log('CONTENT-LENGTH', req.headers['content-length']);
+            //validation for file size because there seems to be somekind of hanging in busboy when file size is too big
+         /*   if (!imageUpload.checkFileSize(req.headers['content-length'])) {
+                var error = new Error('File size is invalid');
+                error.statusCode = 403;
+                error.type = 'file size';
 
+                return res.status(403).json(error);
+            }*/
+            var returnData;
             busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
+                console.log('CHECK', arguments);
+                file.on('limit', function () {
+                    console.log('FILELIMIT');
+                    var error = new Error('File size is invalid');
+                    error.statusCode = 403;
+                    error.type = 'file size busboy';
+                    console.log('LINE END');
+                    busboy.end();
+             //       return res.status(403).json(error);
+                });
+                file.on('error', function (error) {
+                    console.log('FILEERROR', error);
+                    return busboy.emit('error', error);
+                });
+                /*if (!imageUpload.checkFileType(mimetype)) {
+                    var error = new Error('File type is invalid');
+                    error.statusCode = 403;
+                    error.type = 'file type';
+    
+                  //  return res.status(403).json(error);
+                    return busboy.end();
+                }*/
                 var savedFilename = path.join(padId, uuid.v4() + path.extname(filename));
-                imageUpload
-                    .upload(file, {size: req.headers['content-length'], type: mimetype, filename: savedFilename})
-                    .then(function (data) {
-                        return res.status(201).json(data);
-                    }).catch(function (err) {
-                        return res.status(500).json(err);
-                    });
+                var size = req.headers['content-length'];
+           //     file.pipe(fs.createWriteStream('/dev/null'));
+                
+                returnData = imageUpload
+                    .upload(file, {size: size, type: mimetype, filename: savedFilename});
             });
 
             busboy.on('error', function (error) {
-                return res.status(500).json({'data': error});
+                console.log(busboy);
+                console.log('BUSBOYERROR', error);
+                busboy.end();
+            });
+            busboy.on('filesLimit', function () {
+                console.log('BUSBOYFILELIMIT', arguments);
+            });
+            busboy.on('fieldsLimit', function () {
+                console.log('BUSBOYFIELDLIMIT', arguments);
+            });
+            busboy.on('finish', function () {
+                console.log('BUSBOYFINISH', arguments);
+                return res.status(201).json(returnData);
+            });
+            busboy.on('end', function () {
+                console.log('BUSBOYEND', arguments);
             });
 
             req.pipe(busboy);
