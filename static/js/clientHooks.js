@@ -59,6 +59,7 @@ exports.postToolbarInit = function (hook_name, context) {
                     return myXhr;
                 },
                 success: function (data) {
+                    console.log('SUCCESS', arguments);
                     $('#imageUploadModalLoader').hide();
                     context.ace.callWithAce(function (ace) {
                         var imageLineNr = _handleNewLines(ace);
@@ -72,10 +73,7 @@ exports.postToolbarInit = function (hook_name, context) {
                     $('#imageUploadModalLoader').hide();
                     $('#imageUploadModalError .error').html(error.responseText);
                     $('#imageUploadModalError').show();
-                    console.log('Er', error);
-                    console.log('ERROR', error.error());
-                    
-                    // handle error
+                    console.log('ERROR', arguments);     
                 },
                 async: true,
                 data: formData,

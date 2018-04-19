@@ -97,8 +97,12 @@ exports.getLineHTMLForExport = function (hook, context) {
     }
 };
 
+var drainStream = function (stream) {
+    stream.on('readable', stream.read.bind(stream));
+};
+
 exports.expressCreateServer = function (hook_name, context) {
-    context.app.post('/p/:padId/pluginfw/ep_image_upload/upload', function (req, res) {
+    context.app.post('/p/:padId/pluginfw/ep_image_upload/upload', function (req, res, next) {
         var padId = req.params.padId;
         var imageUpload = new StreamUpload({
             extensions: settings.ep_image_upload.fileTypes,
@@ -109,75 +113,57 @@ exports.expressCreateServer = function (hook_name, context) {
         var storageConfig = settings.ep_image_upload.storage;
 
         if (storageConfig) {
-            var busboy = new Busboy({
-                headers: req.headers,
-                limits: {
-                    fileSize: Infinity
-                }
-            });
-            console.log('CONTENT-LENGTH', req.headers['content-length']);
-            //validation for file size because there seems to be somekind of hanging in busboy when file size is too big
-         /*   if (!imageUpload.checkFileSize(req.headers['content-length'])) {
-                var error = new Error('File size is invalid');
-                error.statusCode = 403;
-                error.type = 'file size';
+            try {
+                var busboy = new Busboy({
+                    headers: req.headers,
+                    limits: {
+                        fileSize: Infinity
+                    }
+                });
+            } catch (error) {
+                console.log('error', error);
+                return next(error);
+            }
+            
+            var isDone;
+            var done = function (error) {
+                if (isDone) return;
+                isDone = true;
+          
+                req.unpipe(busboy);
+                drainStream(req);
+                busboy.removeAllListeners();
 
-                return res.status(403).json(error);
-            }*/
-            var returnData;
+                return res.status(error.statusCode || 500).json(error);
+            };
+            var uploadResult;
+            var newFileName = uuid.v4();
             busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
-                console.log('CHECK', arguments);
-                file.on('limit', function () {
-                    console.log('FILELIMIT');
-                    var error = new Error('File size is invalid');
-                    error.statusCode = 403;
-                    error.type = 'file size busboy';
-                    console.log('LINE END');
-                    busboy.end();
-             //       return res.status(403).json(error);
-                });
+                var savedFilename = path.join(padId, newFileName + path.extname(filename));
                 file.on('error', function (error) {
-                    console.log('FILEERROR', error);
-                    return busboy.emit('error', error);
+                    busboy.emit('error', error);
                 });
-                /*if (!imageUpload.checkFileType(mimetype)) {
-                    var error = new Error('File type is invalid');
-                    error.statusCode = 403;
-                    error.type = 'file type';
-    
-                  //  return res.status(403).json(error);
-                    return busboy.end();
-                }*/
-                var savedFilename = path.join(padId, uuid.v4() + path.extname(filename));
-                var size = req.headers['content-length'];
-           //     file.pipe(fs.createWriteStream('/dev/null'));
-                
-                returnData = imageUpload
-                    .upload(file, {size: size, type: mimetype, filename: savedFilename});
+
+                uploadResult = imageUpload
+                    .upload(file, {type: mimetype, filename: savedFilename});
             });
 
-            busboy.on('error', function (error) {
-                console.log(busboy);
-                console.log('BUSBOYERROR', error);
-                busboy.end();
-            });
-            busboy.on('filesLimit', function () {
-                console.log('BUSBOYFILELIMIT', arguments);
-            });
-            busboy.on('fieldsLimit', function () {
-                console.log('BUSBOYFIELDLIMIT', arguments);
-            });
+            busboy.on('error', done);
+
             busboy.on('finish', function () {
-                console.log('BUSBOYFINISH', arguments);
-                return res.status(201).json(returnData);
+                if (uploadResult) {
+                    uploadResult
+                        .then(function (data) {
+                            return res.status(201).json(data);
+                        })
+                        .catch(function (err) {
+                            return res.status(500).json(err);
+                        });
+                }
+                
             });
-            busboy.on('end', function () {
-                console.log('BUSBOYEND', arguments);
-            });
-
             req.pipe(busboy);
         }
 
         
     });
-};
