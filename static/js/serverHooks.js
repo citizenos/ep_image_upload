@@ -100,8 +100,12 @@ var drainStream = function (stream) {
     stream.on('readable', stream.read.bind(stream));
 };
 
-exports.expressCreateServer = function (hookName, context) {
+exports.expressConfigure = function (hookName, context) {
+    console.debug('EP_IMAGE_UPLOAD PARAMS', settings.ep_image_upload);
+
     context.app.post('/p/:padId/pluginfw/ep_image_upload/upload', function (req, res, next) {
+        console.debug('EP_IMAGE_UPLOAD POST', req.params);
+
         var padId = req.params.padId;
         var imageUpload = new StreamUpload({
             extensions: settings.ep_image_upload.fileTypes,
@@ -119,11 +123,15 @@ exports.expressCreateServer = function (hookName, context) {
                     }
                 });
             } catch (error) {
+                console.error('EP_IMAGE_UPLOAD ERROR', error);
+
                 return next(error);
             }
             
             var isDone;
             var done = function (error) {
+                console.debug('EP_IMAGE_UPLOAD UPLOAD ERROR', error);
+
                 if (isDone) return;
                 isDone = true;
           

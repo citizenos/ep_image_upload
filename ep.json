@@ -18,7 +18,7 @@
         "eejsBlock_editbarMenuRight": "ep_image_upload/static/js/serverHooks",
         "eejsBlock_body": "ep_image_upload/static/js/serverHooks",
         "getLineHTMLForExport": "ep_image_upload/static/js/serverHooks",
-        "expressCreateServer": "ep_image_upload/static/js/serverHooks"
+        "expressConfigure": "ep_image_upload/static/js/serverHooks"
       }
     }
   ]
