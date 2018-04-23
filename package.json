@@ -1,7 +1,7 @@
 {
   "name": "ep_image_upload",
   "description": "Add images to etherpad",
-  "version": "0.0.4",
+  "version": "1.0.3",
   "author": {
     "name": "CitizenOS",
     "email": "ilmar@citizenos.com",
