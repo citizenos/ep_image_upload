@@ -9,12 +9,12 @@
   },
   "contributors": [],
   "dependencies": {
-    "busboy": "^0.2.14",
-    "lodash": "^4.17.5",
-    "mime-db": "^1.33.0",
-    "mime-types": "^2.1.18",
+    "busboy": "0.2.14",
+    "lodash": "4.17.5",
+    "mime-db": "1.33.0",
+    "mime-types": "2.1.18",
     "stream_upload": "0.0.2",
-    "uuid": "^3.2.1"
+    "uuid": "3.2.1"
   },
   "repository": {
     "type": "git",
@@ -38,6 +38,6 @@
   "directories": {},
   "readme": "ERROR: No README data found!",
   "devDependencies": {
-    "eslint": "^4.19.1"
+    "eslint": "4.19.1"
   }
 }

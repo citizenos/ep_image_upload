@@ -1,4 +1,4 @@
 { 
-    "ep_image_upload.error.fileSize": "Suurim lubatud pildi suurus on: ",
-    "ep_image_upload.error.fileType": "Lubatud faili tüübid on : "
+    "ep_image_upload.error.fileSize": "Pilt on liiga suur",
+    "ep_image_upload.error.fileType": "Vale pilditüüp"
 }

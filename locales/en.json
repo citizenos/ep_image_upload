@@ -1,4 +1,4 @@
 { 
-    "ep_image_upload.error.fileSize": "Maximum allowed image size is: ",
-    "ep_image_upload.error.fileType": "Allowed filetypes are : "
+    "ep_image_upload.error.fileSize": "File is too large",
+    "ep_image_upload.error.fileType": "Invalid file type"
 }

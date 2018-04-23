@@ -7,36 +7,55 @@ var image = {
         var documentAttributeManager = this.documentAttributeManager;
         documentAttributeManager.removeAttributeOnLine(lineNumber, 'img'); // make the line a task list
     },
-    addImage: function (rep, src) {
+    addImage: function (lineNumber, src) {
         var documentAttributeManager = this.documentAttributeManager;
-        var lineNumber = rep.selStart[0];   
         src = '<img src="' + src + '">';
-        rep.alines.splice(lineNumber+1, 0, '');
-        rep.lines.push(lineNumber);
         documentAttributeManager.setAttributeOnLine(lineNumber, 'img', src); // make the line a task list
     }
 };
 
+var _handleNewLines = function (ace) {
+    var rep = ace.ace_getRep();
+    var lineNumber = rep.selStart[0];
+    var curLine = rep.lines.atIndex(lineNumber);
+    if (curLine.text) {
+        ace.ace_doReturnKey();
+
+        return lineNumber + 1;
+    }
+
+    return lineNumber;
+};
+
 exports.postToolbarInit = function (hook_name, context) {
     var editbar = context.toolbar; // toolbar is actually editbar - http://etherpad.org/doc/v1.5.7/#index_editbar
-
+    $('#closeErrorModalButton').on('click', function () {
+        $('#imageUploadModalError').hide();
+    });
     editbar.registerCommand('addImage', function () {
         $(document).find('body').find('#imageInput').remove();
         var fileInputHtml = '<input style="width:1px;height:1px;z-index:-10000;" id="imageInput" type="file" />';
         $(document).find('body').append(fileInputHtml);
+
         $(document).find('body').find('#imageInput').on('change', function (e) {
             var files = e.target.files;
             if (!files.length) {
                 return 'Please choose a file to upload first.';
             }
             var file = files[0];
+            if (clientVars.ep_image_upload && file.size > clientVars.ep_image_upload.maxFileSize) {
+                var errorMessage = window._('ep_image_upload.error.fileSize');
+                $('#imageUploadModalError .error').html(errorMessage);
+                $('#imageUploadModalError').show();
+
+                return;    
+            }
 
             var formData = new FormData();
 
             // add assoc key values, this will be posts values
             formData.append('file', file, file.name);
-            formData.append('upload_file', true);
-
+            $('#imageUploadModalLoader').show();
             $.ajax({
                 type: 'POST',
                 url: '/p/' + clientVars.padId + '/pluginfw/ep_image_upload/upload',
@@ -46,20 +65,27 @@ exports.postToolbarInit = function (hook_name, context) {
                     return myXhr;
                 },
                 success: function (data) {
+                    $('#imageUploadModalLoader').hide();
                     context.ace.callWithAce(function (ace) {
-                        var rep = ace.ace_getRep();
-                        ace.ace_addImage(rep, data);
-                        var doc = ace.ace_getDocument();
-                        var e = new KeyboardEvent('keydown', {
-                            code: 'Enter',
-                            keyCode: 13
-                        });
-                        doc.dispatchEvent(e);
+                        var imageLineNr = _handleNewLines(ace);
+                        ace.ace_addImage(imageLineNr, data);
+                        ace.ace_doReturnKey();
                     }, 'img', true);
                 },
                 error: function (error) {
-                    console.log('ERROR', error);
-                    // handle error
+                    var errorResponse;
+                    try {
+                        errorResponse = JSON.parse(error.responseText.trim());
+                        if (errorResponse.type) {
+                            errorResponse.message = window._('ep_image_upload.error.' + errorResponse.type);
+                        }
+                    } catch (err) {
+                        errorResponse = {message: error.responseText};
+                    }
+
+                    $('#imageUploadModalLoader').hide();
+                    $('#imageUploadModalError .error').html(errorResponse.message);
+                    $('#imageUploadModalError').show();
                 },
                 async: true,
                 data: formData,

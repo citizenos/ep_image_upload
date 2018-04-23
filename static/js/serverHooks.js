@@ -19,7 +19,7 @@ var path = require('path');
  *
  * Exposes plugin settings from settings.json to client code inside clientVars variable to be accessed from client side hooks
  *
- * @param {string} hook_name Hook name ("clientVars").
+ * @param {string} hookName Hook name ("clientVars").
  * @param {object} args Object containing the arguments passed to hook. {pad: {object}}
  * @param {function} cb Callback
  *
@@ -27,7 +27,7 @@ var path = require('path');
  *
  * @see {@link http://etherpad.org/doc/v1.5.7/#index_clientvars}
  */
-exports.clientVars = function (hook_name, args, cb) {
+exports.clientVars = function (hookName, args, cb) {
     var pluginSettings = {};
     var keys = Object.keys(settings.ep_image_upload);
     keys.forEach(function (key) {
@@ -37,7 +37,7 @@ exports.clientVars = function (hook_name, args, cb) {
     });
 
     if (!pluginSettings) {
-        console.warn(hook_name, 'ep_image_upload settings not found. The settings can be specified in EP settings.json.');
+        console.warn(hookName, 'ep_image_upload settings not found. The settings can be specified in EP settings.json.');
 
         return cb();
     }
@@ -45,14 +45,28 @@ exports.clientVars = function (hook_name, args, cb) {
     return cb({ep_image_upload: pluginSettings});
 };
 
-exports.eejsBlock_editbarMenuRight = function (hook_name, args, cb) {
-    var eejsContent = eejs.require("ep_image_upload/templates/editBarButtons.ejs");
+exports.eejsBlock_editbarMenuRight = function (hookName, args, cb) {
+    var eejsContent = eejs.require('ep_image_upload/templates/editBarButtons.ejs');
     args.content += eejsContent;
 
     return cb();
 };
 
-exports.padInitToolbar = function (hook_name, args) {
+exports.eejsBlock_body = function (hookName, args, cb) {
+    var modal = eejs.require('ep_image_upload/templates/modal.ejs', {}, module);
+    args.content += modal;
+
+    return cb();
+};
+
+exports.eejsBlock_styles = function (hookName, args, cb) {
+    var style = eejs.require('ep_image_upload/templates/styles.ejs', {}, module);
+    args.content += style;
+
+    return cb();
+};
+
+exports.padInitToolbar = function (hookName, args) {
     var toolbar = args.toolbar;
     var addImageButton = toolbar.button({
         command: 'addImage',
@@ -82,8 +96,12 @@ exports.getLineHTMLForExport = function (hook, context) {
     }
 };
 
-exports.expressCreateServer = function (hook_name, context) {
-    context.app.post('/p/:padId/pluginfw/ep_image_upload/upload', function (req, res) {
+var drainStream = function (stream) {
+    stream.on('readable', stream.read.bind(stream));
+};
+
+exports.expressCreateServer = function (hookName, context) {
+    context.app.post('/p/:padId/pluginfw/ep_image_upload/upload', function (req, res, next) {
         var padId = req.params.padId;
         var imageUpload = new StreamUpload({
             extensions: settings.ep_image_upload.fileTypes,
@@ -92,27 +110,62 @@ exports.expressCreateServer = function (hook_name, context) {
             storage: settings.ep_image_upload.storage
         });
         var storageConfig = settings.ep_image_upload.storage;
-
         if (storageConfig) {
-            var busboy = new Busboy({
-                headers: req.headers
-            });
+            try {
+                var busboy = new Busboy({
+                    headers: req.headers,
+                    limits: {
+                        fileSize: settings.ep_image_upload.maxFileSize
+                    }
+                });
+            } catch (error) {
+                return next(error);
+            }
+            
+            var isDone;
+            var done = function (error) {
+                if (isDone) return;
+                isDone = true;
+          
+                req.unpipe(busboy);
+                drainStream(req);
+                busboy.removeAllListeners();
 
+                return res.status(error.statusCode || 500).json(error);
+            };
+            var uploadResult;
+            var newFileName = uuid.v4();
             busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
-                var savedFilename = path.join(padId, uuid.v4() + path.extname(filename));
-                imageUpload
-                    .upload(file, {size: req.headers['content-length'], type: mimetype, filename: savedFilename})
-                    .then(function (data) {
-                        return res.status(201).json(data);
-                    }).catch(function (err) {
-                        return res.status(500).json(err);
-                    });
+                var savedFilename = path.join(padId, newFileName + path.extname(filename));
+                file.on('limit', function () {
+                    var error = new Error('File is too large');
+                    error.type = 'fileSize';
+                    error.statusCode = 403;
+                    busboy.emit('error', error);
+                    imageUpload.deletePartials();
+                });
+                file.on('error', function (error) {
+                    busboy.emit('error', error);
+                });
+
+                uploadResult = imageUpload
+                    .upload(file, {type: mimetype, filename: savedFilename});
+                
             });
 
-            busboy.on('error', function (error) {
-                return res.status(500).json({'data': error});
+            busboy.on('error', done);
+            busboy.on('finish', function () {
+                if (uploadResult) {
+                    uploadResult
+                        .then(function (data) {
+                            return res.status(201).json(data);
+                        })
+                        .catch(function (err) {
+                            return res.status(500).json(err);
+                        });
+                }
+                
             });
-
             req.pipe(busboy);
         }
 
