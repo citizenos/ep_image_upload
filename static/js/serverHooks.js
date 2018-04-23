@@ -105,7 +105,7 @@ exports.expressConfigure = function (hookName, context) {
 
     context.app.post('/p/:padId/pluginfw/ep_image_upload/upload', function (req, res, next) {
         console.debug('EP_IMAGE_UPLOAD POST', req.params);
-
+        
         var padId = req.params.padId;
         var imageUpload = new StreamUpload({
             extensions: settings.ep_image_upload.fileTypes,
@@ -134,12 +134,13 @@ exports.expressConfigure = function (hookName, context) {
 
                 if (isDone) return;
                 isDone = true;
-          
+                
+                res.status(error.statusCode || 500).json(error);
                 req.unpipe(busboy);
                 drainStream(req);
                 busboy.removeAllListeners();
 
-                return res.status(error.statusCode || 500).json(error);
+                return;
             };
             var uploadResult;
             var newFileName = uuid.v4();
