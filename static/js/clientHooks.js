@@ -47,19 +47,22 @@ exports.postToolbarInit = function (hook_name, context) {
             var mimeType = mimedb[file.type];
             var validMime = null;
             var validSize = true;
-            if(clientVars.ep_image_upload && clientVars.ep_image_upload.fileTypes) {
+            if (clientVars.ep_image_upload && clientVars.ep_image_upload.fileTypes) {
                 validMime = false;
-                for(var x=0; x < clientVars.ep_image_upload.fileTypes.length; x++) {
-                    var exists = mimeType.extensions.indexOf(clientVars.ep_image_upload.fileTypes[x]);
-                    if (exists > -1) {
-                        validMime = true;
-                        x = clientVars.ep_image_upload.fileTypes.length;
+                if (mimeType && mimeType.extensions) {
+                    for (var x = 0; x < clientVars.ep_image_upload.fileTypes.length; x++) {
+                        var exists = mimeType.extensions.indexOf(clientVars.ep_image_upload.fileTypes[x]);
+                        if (exists > -1) {
+                            validMime = true;
+                            x = clientVars.ep_image_upload.fileTypes.length;
+                        }
                     }
                 }
                 if (validMime === false) {
                     var errorMessage = window._('ep_image_upload.error.fileType');
                     $('#imageUploadModalError .error').html(errorMessage);
                     $('#imageUploadModalError').show();
+                    
                     return;
                 }
             }
