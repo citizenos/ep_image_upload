@@ -43,57 +43,80 @@ exports.postToolbarInit = function (hook_name, context) {
                 return 'Please choose a file to upload first.';
             }
             var file = files[0];
+            var mimedb = clientVars.ep_image_upload.mimeTypes;
+            var mimeType = mimedb[file.type];
+            var validMime = null;
+            var validSize = true;
+            if(clientVars.ep_image_upload && clientVars.ep_image_upload.fileTypes) {
+                validMime = false;
+                for(var x=0; x < clientVars.ep_image_upload.fileTypes.length; x++) {
+                    var exists = mimeType.extensions.indexOf(clientVars.ep_image_upload.fileTypes[x]);
+                    console.log(exists);
+                    if (exists > -1) {
+                        validMime = true;
+                        x = clientVars.ep_image_upload.fileTypes.length;
+                    }
+                }
+                if (validMime === false) {
+                    var errorMessage = window._('ep_image_upload.error.fileType');
+                    $('#imageUploadModalError .error').html(errorMessage);
+                    $('#imageUploadModalError').show();
+                    return;
+                }
+            }
+
             if (clientVars.ep_image_upload && file.size > clientVars.ep_image_upload.maxFileSize) {
                 var errorMessage = window._('ep_image_upload.error.fileSize');
                 $('#imageUploadModalError .error').html(errorMessage);
                 $('#imageUploadModalError').show();
-
+                validSize = false;
                 return;    
             }
+            if (validMime !== false && validSize) {
+                var formData = new FormData();
 
-            var formData = new FormData();
+                // add assoc key values, this will be posts values
+                formData.append('file', file, file.name);
+                $('#imageUploadModalLoader').show();
+                $.ajax({
+                    type: 'POST',
+                    url: '/p/' + clientVars.padId + '/pluginfw/ep_image_upload/upload',
+                    xhr: function () {
+                        var myXhr = $.ajaxSettings.xhr();
 
-            // add assoc key values, this will be posts values
-            formData.append('file', file, file.name);
-            $('#imageUploadModalLoader').show();
-            $.ajax({
-                type: 'POST',
-                url: '/p/' + clientVars.padId + '/pluginfw/ep_image_upload/upload',
-                xhr: function () {
-                    var myXhr = $.ajaxSettings.xhr();
-
-                    return myXhr;
-                },
-                success: function (data) {
-                    $('#imageUploadModalLoader').hide();
-                    context.ace.callWithAce(function (ace) {
-                        var imageLineNr = _handleNewLines(ace);
-                        ace.ace_addImage(imageLineNr, data);
-                        ace.ace_doReturnKey();
-                    }, 'img', true);
-                },
-                error: function (error) {
-                    var errorResponse;
-                    try {
-                        errorResponse = JSON.parse(error.responseText.trim());
-                        if (errorResponse.type) {
-                            errorResponse.message = window._('ep_image_upload.error.' + errorResponse.type);
+                        return myXhr;
+                    },
+                    success: function (data) {
+                        $('#imageUploadModalLoader').hide();
+                        context.ace.callWithAce(function (ace) {
+                            var imageLineNr = _handleNewLines(ace);
+                            ace.ace_addImage(imageLineNr, data);
+                            ace.ace_doReturnKey();
+                        }, 'img', true);
+                    },
+                    error: function (error) {
+                        var errorResponse;
+                        try {
+                            errorResponse = JSON.parse(error.responseText.trim());
+                            if (errorResponse.type) {
+                                errorResponse.message = window._('ep_image_upload.error.' + errorResponse.type);
+                            }
+                        } catch (err) {
+                            errorResponse = {message: error.responseText};
                         }
-                    } catch (err) {
-                        errorResponse = {message: error.responseText};
-                    }
 
-                    $('#imageUploadModalLoader').hide();
-                    $('#imageUploadModalError .error').html(errorResponse.message);
-                    $('#imageUploadModalError').show();
-                },
-                async: true,
-                data: formData,
-                cache: false,
-                contentType: false,
-                processData: false,
-                timeout: 60000
-            });
+                        $('#imageUploadModalLoader').hide();
+                        $('#imageUploadModalError .error').html(errorResponse.message);
+                        $('#imageUploadModalError').show();
+                    },
+                    async: true,
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    timeout: 60000
+                });
+            }
 
         });
         $(document).find('body').find('#imageInput').trigger('click');

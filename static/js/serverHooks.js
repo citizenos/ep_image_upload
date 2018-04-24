@@ -13,6 +13,7 @@ var Busboy = require('busboy');
 var StreamUpload = require('stream_upload');
 var uuid = require('uuid');
 var path = require('path');
+var mimetypes = require('mime-db');
 
 /**
  * ClientVars hook
@@ -41,7 +42,7 @@ exports.clientVars = function (hookName, args, cb) {
 
         return cb();
     }
-
+    pluginSettings.mimeTypes = mimetypes;
     return cb({ep_image_upload: pluginSettings});
 };
 
@@ -181,3 +182,4 @@ exports.expressConfigure = function (hookName, context) {
         
     });
 };
+
