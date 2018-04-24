@@ -51,7 +51,6 @@ exports.postToolbarInit = function (hook_name, context) {
                 validMime = false;
                 for(var x=0; x < clientVars.ep_image_upload.fileTypes.length; x++) {
                     var exists = mimeType.extensions.indexOf(clientVars.ep_image_upload.fileTypes[x]);
-                    console.log(exists);
                     if (exists > -1) {
                         validMime = true;
                         x = clientVars.ep_image_upload.fileTypes.length;
