@@ -142,7 +142,7 @@ exports.aceDomLineProcessLineAttributes = function (name, context) {
     var randomId = Math.floor((Math.random() * 100000) + 1); 
     var template = '<span id="' + randomId + '" class="image">';
     if (imgType[1]) {
-        var preHtml = template + imgType[1] + ' style="width:100%;">';
+        var preHtml = template + imgType[1] + ' >';
         var postHtml = '</span>';
         var modifier = {
             preHtml: preHtml,
