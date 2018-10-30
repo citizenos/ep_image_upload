@@ -14,6 +14,7 @@ var StreamUpload = require('stream_upload');
 var uuid = require('uuid');
 var path = require('path');
 var mimetypes = require('mime-db');
+var url = require('url');
 
 /**
  * ClientVars hook
@@ -145,8 +146,14 @@ exports.expressConfigure = function (hookName, context) {
             };
             var uploadResult;
             var newFileName = uuid.v4();
+            var accessPath  = '';
             busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
                 var savedFilename = path.join(padId, newFileName + path.extname(filename));
+                
+                if (!settings.ep_image_upload.storage.type || settings.ep_image_upload.storage.type === 'local') {
+                    accessPath = url.resolve(settings.ep_image_upload.storage.baseURL, savedFilename);
+                    savedFilename = path.join(settings.ep_image_upload.storage.baseFolder, savedFilename);                    
+                }
                 file.on('limit', function () {
                     var error = new Error('File is too large');
                     error.type = 'fileSize';
@@ -168,6 +175,11 @@ exports.expressConfigure = function (hookName, context) {
                 if (uploadResult) {
                     uploadResult
                         .then(function (data) {
+                            
+                            if (accessPath) {
+                                data = accessPath;
+                            }
+
                             return res.status(201).json(data);
                         })
                         .catch(function (err) {

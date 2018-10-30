@@ -20,3 +20,16 @@ Plugin needs S3 config in etherpads settings.json file
 "fileTypes": ["jpeg", "jpg", "bmp", "gif","png", ...etc], // if left blank file mime-type is checked to match image.*
 "maxFileSize": 5000000 //file size in bytes if not set there is no limit
 ```
+Local storage needs config for accessing files from web
+
+``` javascript
+"ep_image_upload":{
+    "storage":{
+      "type": "local",
+      "baseFolder": "FOLDER_PATH",
+      "baseURL": "URL to file storage"
+    }
+  },
+"fileTypes": ["jpeg", "jpg", "bmp", "gif","png", ...etc], // if left blank file mime-type is checked to match image.*
+"maxFileSize": 5000000 //file size in bytes if not set there is no limit
+```
