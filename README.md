@@ -54,7 +54,7 @@ Sample configuration in `settings.json` for using with Amazon S3:
 "maxFileSize": 5000000
 ```
 
-`fileTypes"` - if left blank file mime-type is checked to match `image.*`
+`fileTypes` - if left blank file mime-type is checked to match `image.*`
 
-`maxFileSize"` - file size in bytes. If not set there is no limit
+`maxFileSize` - file size in bytes. If not set there is no limit
 
