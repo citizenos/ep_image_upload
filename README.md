@@ -17,19 +17,28 @@ Plugin needs S3 config in etherpads settings.json file
       "baseFolder": "FOLDER_PATH"
     }
   },
-"fileTypes": ["jpeg", "jpg", "bmp", "gif","png", ...etc], // if left blank file mime-type is checked to match image.*
-"maxFileSize": 5000000 //file size in bytes if not set there is no limit
+"fileTypes": ["jpeg", "jpg", "bmp", "gif","png"],
+"maxFileSize": 5000000
 ```
+
+```"fileTypes"``` -> if left blank file mime-type is checked to match image.*
+
+```"maxFileSize"``` -> file size in bytes. If not set there is no limit
+
 Local storage needs config for accessing files from web
 
 ``` javascript
 "ep_image_upload":{
     "storage":{
       "type": "local",
-      "baseFolder": "FOLDER_PATH",
-      "baseURL": "URL to file storage"
+      "baseFolder": "/var/www/images",
+      "baseURL": "http://www.my-site.com/images/"
     }
   },
-"fileTypes": ["jpeg", "jpg", "bmp", "gif","png", ...etc], // if left blank file mime-type is checked to match image.*
-"maxFileSize": 5000000 //file size in bytes if not set there is no limit
+"fileTypes": ["jpeg", "jpg", "bmp", "gif","png"],
+"maxFileSize": 5000000 
 ```
+
+```"baseFolder"``` -> Path to filesystem folder that is accessible from browser. For example to add images to etherpad subfolder then ```"/path/to/my_etherpad_folder/src/static/images"```
+
+```"baseURL"``` -> URL path to "baseFolder". For example if ```"baseFolder"``` is "/path/to/my_etherpad_folder/src/images"``` then ```http://myetherpad.com:9001/static/images/"``` 
