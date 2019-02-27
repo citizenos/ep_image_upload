@@ -26,13 +26,13 @@ Sample configuration in `settings.json` for using with local (disk) storage:
 "maxFileSize": 5000000 
 ```
 
-```"baseFolder"``` - Path to filesystem folder that is publicly accessible from browser. For example to add images to Etherpad subfolder then ```"/path/to/my_etherpad_folder/src/static/images"```
+`baseFolder` - Path to filesystem folder that is publicly accessible from browser. For example to add images to Etherpad subfolder then `/path/to/my_etherpad_folder/src/static/images`
 
-```"baseURL"``` - URL path to `baseFolder`. For example if ```"baseFolder"``` is "/path/to/my_etherpad_folder/src/images"``` then ```http://myetherpad.com:9001/static/images/"```
+`baseURL` - URL path to `baseFolder`. For example if `baseFolder` is `/path/to/my_etherpad_folder/src/images"` then `http://myetherpad.com:9001/static/images/`
 
-```"fileTypes"``` - if left blank file mime-type is checked to match image.*
+`fileTypes` - if left blank file mime-type is checked to match `image.*`
 
-```"maxFileSize"``` - file size in bytes. If not set there is no limit
+`maxFileSize` - file size in bytes. If not set there is no limit
 
 
 ### Amazon S3 storage
@@ -54,7 +54,7 @@ Sample configuration in `settings.json` for using with Amazon S3:
 "maxFileSize": 5000000
 ```
 
-```"fileTypes"``` - if left blank file mime-type is checked to match image.*
+`fileTypes"` - if left blank file mime-type is checked to match `image.*`
 
-```"maxFileSize"``` - file size in bytes. If not set there is no limit
+`maxFileSize"` - file size in bytes. If not set there is no limit
 
