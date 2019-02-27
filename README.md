@@ -1,11 +1,44 @@
-#Plugin to upload images to etherpad
+# EP_image_upload
 
-This uses image input to add Images to etherpad, it's based on ep_copy_paste_images module but without drag drop functionality.
+Plugin to upload images to Etherpad (https://etherpad.org/).
 
-Currently only amazon S3 and local storage are supported.
-Default storage is local
+This uses image input to add images to Etherpad, it's based on ep_copy_paste_images (https://github.com/JohnMcLear/ep_copy_paste_images) module but without drag drop functionality.
 
-Plugin needs S3 config in etherpads settings.json file
+Supported storages:
+
+- Local (disk) storage - default
+- Amazon S3 
+
+### Local (disk) storage
+
+Local (disk) storage needs config for accessing files from web
+
+Sample configuration in `settings.json` for using with local (disk) storage:
+``` javascript
+"ep_image_upload":{
+    "storage":{
+      "type": "local",
+      "baseFolder": "/var/www/images",
+      "baseURL": "http://www.my-site.com/images/"
+    }
+  },
+"fileTypes": ["jpeg", "jpg", "bmp", "gif","png"],
+"maxFileSize": 5000000 
+```
+
+```"baseFolder"``` - Path to filesystem folder that is publicly accessible from browser. For example to add images to Etherpad subfolder then ```"/path/to/my_etherpad_folder/src/static/images"```
+
+```"baseURL"``` - URL path to `baseFolder`. For example if ```"baseFolder"``` is "/path/to/my_etherpad_folder/src/images"``` then ```http://myetherpad.com:9001/static/images/"```
+
+```"fileTypes"``` - if left blank file mime-type is checked to match image.*
+
+```"maxFileSize"``` - file size in bytes. If not set there is no limit
+
+
+### Amazon S3 storage
+
+Sample configuration in `settings.json` for using with Amazon S3:
+
 ``` javascript
 "ep_image_upload":{
     "storage":{
@@ -21,24 +54,7 @@ Plugin needs S3 config in etherpads settings.json file
 "maxFileSize": 5000000
 ```
 
-```"fileTypes"``` -> if left blank file mime-type is checked to match image.*
+```"fileTypes"``` - if left blank file mime-type is checked to match image.*
 
-```"maxFileSize"``` -> file size in bytes. If not set there is no limit
+```"maxFileSize"``` - file size in bytes. If not set there is no limit
 
-Local storage needs config for accessing files from web
-
-``` javascript
-"ep_image_upload":{
-    "storage":{
-      "type": "local",
-      "baseFolder": "/var/www/images",
-      "baseURL": "http://www.my-site.com/images/"
-    }
-  },
-"fileTypes": ["jpeg", "jpg", "bmp", "gif","png"],
-"maxFileSize": 5000000 
-```
-
-```"baseFolder"``` -> Path to filesystem folder that is accessible from browser. For example to add images to etherpad subfolder then ```"/path/to/my_etherpad_folder/src/static/images"```
-
-```"baseURL"``` -> URL path to "baseFolder". For example if ```"baseFolder"``` is "/path/to/my_etherpad_folder/src/images"``` then ```http://myetherpad.com:9001/static/images/"``` 
