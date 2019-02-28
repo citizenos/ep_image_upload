@@ -15,6 +15,7 @@ var uuid = require('uuid');
 var path = require('path');
 var mimetypes = require('mime-db');
 var url = require('url');
+var fs = require('fs');
 
 /**
  * ClientVars hook
@@ -44,6 +45,7 @@ exports.clientVars = function (hookName, args, cb) {
         return cb();
     }
     pluginSettings.mimeTypes = mimetypes;
+
     return cb({ep_image_upload: pluginSettings});
 };
 
@@ -103,95 +105,106 @@ var drainStream = function (stream) {
 };
 
 exports.expressConfigure = function (hookName, context) {
-    console.debug('EP_IMAGE_UPLOAD PARAMS', settings.ep_image_upload);
-
     context.app.post('/p/:padId/pluginfw/ep_image_upload/upload', function (req, res, next) {
-        console.debug('EP_IMAGE_UPLOAD POST', req.params);
+        console.debug('EP_IMAGE_UPLOAD SETTINGS', settings.ep_image_upload);
         
-        var padId = req.params.padId;
-        var imageUpload = new StreamUpload({
-            extensions: settings.ep_image_upload.fileTypes,
-            maxSize: settings.ep_image_upload.maxFileSize,
-            baseFolder: settings.ep_image_upload.storage.baseFolder,
-            storage: settings.ep_image_upload.storage
-        });
-        var storageConfig = settings.ep_image_upload.storage;
-        if (storageConfig) {
-            try {
-                var busboy = new Busboy({
-                    headers: req.headers,
-                    limits: {
-                        fileSize: settings.ep_image_upload.maxFileSize
-                    }
-                });
-            } catch (error) {
-                console.error('EP_IMAGE_UPLOAD ERROR', error);
-
-                return next(error);
-            }
-            
-            var isDone;
-            var done = function (error) {
-                console.debug('EP_IMAGE_UPLOAD UPLOAD ERROR', error);
-
-                if (isDone) return;
-                isDone = true;
-                
-                res.status(error.statusCode || 500).json(error);
-                req.unpipe(busboy);
-                drainStream(req);
-                busboy.removeAllListeners();
+        fs.access(settings.ep_image_upload.storage.baseFolder, fs.constants.W_OK, function (err) {
+            if (err) {
+                console.error('ERROR', err);
 
                 return;
-            };
-            var uploadResult;
-            var newFileName = uuid.v4();
-            var accessPath  = '';
-            busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
-                var savedFilename = path.join(padId, newFileName + path.extname(filename));
-                
-                if (!settings.ep_image_upload.storage.type || settings.ep_image_upload.storage.type === 'local') {
-                    accessPath = url.resolve(settings.ep_image_upload.storage.baseURL, savedFilename);
-                    savedFilename = path.join(settings.ep_image_upload.storage.baseFolder, savedFilename);                    
-                }
-                file.on('limit', function () {
-                    var error = new Error('File is too large');
-                    error.type = 'fileSize';
-                    error.statusCode = 403;
-                    busboy.emit('error', error);
-                    imageUpload.deletePartials();
-                });
-                file.on('error', function (error) {
-                    busboy.emit('error', error);
-                });
-
-                uploadResult = imageUpload
-                    .upload(file, {type: mimetype, filename: savedFilename});
-                
+            }
+            console.debug('EP_IMAGE_UPLOAD POST PARAMS', req.params);
+            
+            var padId = req.params.padId;
+            var imageUpload = new StreamUpload({
+                extensions: settings.ep_image_upload.fileTypes,
+                maxSize: settings.ep_image_upload.maxFileSize,
+                baseFolder: settings.ep_image_upload.storage.baseFolder,
+                storage: settings.ep_image_upload.storage
             });
+            var storageConfig = settings.ep_image_upload.storage;
+            if (storageConfig) {
+                try {
+                    var busboy = new Busboy({
+                        headers: req.headers,
+                        limits: {
+                            fileSize: settings.ep_image_upload.maxFileSize
+                        }
+                    });
+                } catch (error) {
+                    console.error('EP_IMAGE_UPLOAD ERROR', error);
 
-            busboy.on('error', done);
-            busboy.on('finish', function () {
-                if (uploadResult) {
-                    uploadResult
-                        .then(function (data) {
-                            
-                            if (accessPath) {
-                                data = accessPath;
-                            }
-
-                            return res.status(201).json(data);
-                        })
-                        .catch(function (err) {
-                            return res.status(500).json(err);
-                        });
+                    return next(error);
                 }
                 
-            });
-            req.pipe(busboy);
-        }
+                var isDone;
+                var done = function (error) {
+                    if (error) {
+                        console.error('EP_IMAGE_UPLOAD UPLOAD ERROR', error);
 
-        
+                        return;
+                    }
+
+                    if (isDone) return;
+                    isDone = true;
+                    
+                    res.status(error.statusCode || 500).json(error);
+                    req.unpipe(busboy);
+                    drainStream(req);
+                    busboy.removeAllListeners();
+                };
+
+                var uploadResult;
+                var newFileName = uuid.v4();
+                var accessPath = '';
+                busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
+                    var savedFilename = path.join(padId, newFileName + path.extname(filename));
+                    
+                    if (!settings.ep_image_upload.storage.type || settings.ep_image_upload.storage.type === 'local') {
+                        accessPath = url.resolve(settings.ep_image_upload.storage.baseURL, savedFilename);
+                        savedFilename = path.join(settings.ep_image_upload.storage.baseFolder, savedFilename);                    
+                    }
+                    file.on('limit', function () {
+                        var error = new Error('File is too large');
+                        error.type = 'fileSize';
+                        error.statusCode = 403;
+                        busboy.emit('error', error);
+                        imageUpload.deletePartials();
+                    });
+                    file.on('error', function (error) {
+                        busboy.emit('error', error);
+                    });
+
+                    uploadResult = imageUpload
+                        .upload(file, {type: mimetype, filename: savedFilename});
+                    
+                });
+
+                busboy.on('error', done);
+                busboy.on('finish', function () {
+                    if (uploadResult) {
+                        uploadResult
+                            .then(function (data) {
+                                
+                                if (accessPath) {
+                                    data = accessPath;
+                                }
+
+                                return res.status(201).json(data);
+                            })
+                            .catch(function (err) {
+                                return res.status(500).json(err);
+                            });
+                    }
+                    
+                });
+                req.pipe(busboy);
+            }
+
+            
+        });
+
     });
 };
 

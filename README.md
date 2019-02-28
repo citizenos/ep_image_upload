@@ -15,10 +15,10 @@ Plugin needs S3 config in etherpads settings.json file
       "region": "YOUR_REGION",
       "bucket": "BUCKET_NAME",
       "baseFolder": "FOLDER_PATH"
-    }
+    },
+    "fileTypes": ["jpeg", "jpg", "bmp", "gif","png"],
+    "maxFileSize": 5000000
   },
-"fileTypes": ["jpeg", "jpg", "bmp", "gif","png"],
-"maxFileSize": 5000000
 ```
 
 ```"fileTypes"``` -> if left blank file mime-type is checked to match image.*
@@ -33,12 +33,28 @@ Local storage needs config for accessing files from web
       "type": "local",
       "baseFolder": "/var/www/images",
       "baseURL": "http://www.my-site.com/images/"
-    }
+    },
+    "fileTypes": ["jpeg", "jpg", "bmp", "gif","png"],
+    "maxFileSize": 5000000 
   },
-"fileTypes": ["jpeg", "jpg", "bmp", "gif","png"],
-"maxFileSize": 5000000 
 ```
 
 ```"baseFolder"``` -> Path to filesystem folder that is accessible from browser. For example to add images to etherpad subfolder then ```"/path/to/my_etherpad_folder/src/static/images"```
 
 ```"baseURL"``` -> URL path to "baseFolder". For example if ```"baseFolder"``` is "/path/to/my_etherpad_folder/src/images"``` then ```http://myetherpad.com:9001/static/images/"``` 
+
+Also button ```"addImage"``` must be added under ```"toolbar"```
+for example:
+
+```
+"toolbar": {
+    "left": [
+      [
+        "bold",
+        "italic",
+        "underline",
+        "strikethrough",
+        "addImage"
+      ]
+}
+```
