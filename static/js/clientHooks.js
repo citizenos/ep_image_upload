@@ -72,9 +72,22 @@ exports.postToolbarInit = function (hook_name, context) {
                 $('#imageUploadModalError .error').html(errorMessage);
                 $('#imageUploadModalError').show();
                 validSize = false;
+
                 return;    
             }
-            if (validMime !== false && validSize) {
+            if (clientVars.ep_image_upload.type === 'base64') {
+                $('#imageUploadModalLoader').hide();
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function () {
+                    var data = reader.result;
+                    context.ace.callWithAce(function (ace) {
+                        var imageLineNr = _handleNewLines(ace);
+                        ace.ace_addImage(imageLineNr, data);
+                        ace.ace_doReturnKey();
+                    }, 'img', true);
+                };
+            } else {
                 var formData = new FormData();
 
                 // add assoc key values, this will be posts values

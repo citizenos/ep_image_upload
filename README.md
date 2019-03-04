@@ -5,9 +5,24 @@ Plugin to upload images to Etherpad (https://etherpad.org/).
 This uses image input to add images to Etherpad, it's based on ep_copy_paste_images (https://github.com/JohnMcLear/ep_copy_paste_images) module but without drag drop functionality.
 
 Supported storages:
-
-- Local (disk) storage - default
+- Base 64 - default
+- Local (disk) storage
 - Amazon S3 
+
+### Base64
+
+Images are converted to base64 and stored inside etherpad document
+Sample configuration in `settings.json` for using with base64:
+``` javascript
+"ep_image_upload": {
+    "fileTypes": ["jpeg", "jpg", "bmp", "gif", "png"],
+    "maxFileSize": 5000000
+}
+```
+
+`fileTypes` - if left blank file mime-type is checked to match `image.*`
+
+`maxFileSize` - file size in bytes. If not set there is no limit
 
 ### Local (disk) storage
 

@@ -30,13 +30,18 @@ var url = require('url');
  * @see {@link http://etherpad.org/doc/v1.5.7/#index_clientvars}
  */
 exports.clientVars = function (hookName, args, cb) {
-    var pluginSettings = {};
+    var pluginSettings = {
+        storageType: 'base64'
+    };
     var keys = Object.keys(settings.ep_image_upload);
     keys.forEach(function (key) {
         if (key !== 'storage') {
             pluginSettings[key] = settings.ep_image_upload[key];
         }
     });
+    if (settings.ep_image_upload.storage && settings.ep_image_upload.storage.type !== 'base64') {
+        pluginSettings.storageType = settings.ep_image_upload.storage.type;
+    }
 
     if (!pluginSettings) {
         console.warn(hookName, 'ep_image_upload settings not found. The settings can be specified in EP settings.json.');
@@ -154,7 +159,11 @@ exports.expressConfigure = function (hookName, context) {
             busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
                 var savedFilename = path.join(padId, newFileName + path.extname(filename));
                 
-                if (!settings.ep_image_upload.storage.type || settings.ep_image_upload.storage.type === 'local') {
+                if (settings.ep_image_upload.storage && settings.ep_image_upload.storage.type === 'local') {
+                    var baseURL = settings.ep_image_upload.storage.baseURL;
+                    if (baseURL.charAt(baseURL.length - 1) !== '/') {
+                        baseURL += '/';
+                    }
                     accessPath = url.resolve(settings.ep_image_upload.storage.baseURL, savedFilename);
                     savedFilename = path.join(settings.ep_image_upload.storage.baseFolder, savedFilename);                    
                 }
