@@ -75,7 +75,7 @@ exports.postToolbarInit = function (hook_name, context) {
 
                 return;    
             }
-            if (clientVars.ep_image_upload.type === 'base64') {
+            if (clientVars.ep_image_upload.storageType === 'base64') {
                 $('#imageUploadModalLoader').hide();
                 var reader = new FileReader();
                 reader.readAsDataURL(file);
