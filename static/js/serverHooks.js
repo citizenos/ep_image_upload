@@ -77,6 +77,7 @@ exports.eejsBlock_styles = function (hookName, args, cb) {
 exports.padInitToolbar = function (hookName, args) {
     var toolbar = args.toolbar;
     var addImageButton = toolbar.button({
+        localizationId: 'ep_image_upload.toolbar.image_upload.title',
         command: 'addImage',
         class: 'buttonicon ep_image_upload image_upload'
     });
@@ -113,7 +114,7 @@ exports.expressConfigure = function (hookName, context) {
         console.debug('EP_IMAGE_UPLOAD SETTINGS', settings.ep_image_upload);
 
         console.debug('EP_IMAGE_UPLOAD POST PARAMS', req.params);
-        
+
         var padId = req.params.padId;
         var imageUpload = new StreamUpload({
             extensions: settings.ep_image_upload.fileTypes,
@@ -135,7 +136,7 @@ exports.expressConfigure = function (hookName, context) {
 
                 return next(error);
             }
-            
+
             var isDone;
             var done = function (error) {
                 if (error) {
@@ -146,7 +147,7 @@ exports.expressConfigure = function (hookName, context) {
 
                 if (isDone) return;
                 isDone = true;
-                
+
                 res.status(error.statusCode || 500).json(error);
                 req.unpipe(busboy);
                 drainStream(req);
@@ -158,14 +159,14 @@ exports.expressConfigure = function (hookName, context) {
             var accessPath = '';
             busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
                 var savedFilename = path.join(padId, newFileName + path.extname(filename));
-                
+
                 if (settings.ep_image_upload.storage && settings.ep_image_upload.storage.type === 'local') {
                     var baseURL = settings.ep_image_upload.storage.baseURL;
                     if (baseURL.charAt(baseURL.length - 1) !== '/') {
                         baseURL += '/';
                     }
                     accessPath = url.resolve(settings.ep_image_upload.storage.baseURL, savedFilename);
-                    savedFilename = path.join(settings.ep_image_upload.storage.baseFolder, savedFilename);                    
+                    savedFilename = path.join(settings.ep_image_upload.storage.baseFolder, savedFilename);
                 }
                 file.on('limit', function () {
                     var error = new Error('File is too large');
@@ -180,7 +181,7 @@ exports.expressConfigure = function (hookName, context) {
 
                 uploadResult = imageUpload
                     .upload(file, {type: mimetype, filename: savedFilename});
-                
+
             });
 
             busboy.on('error', done);
@@ -188,7 +189,7 @@ exports.expressConfigure = function (hookName, context) {
                 if (uploadResult) {
                     uploadResult
                         .then(function (data) {
-                            
+
                             if (accessPath) {
                                 data = accessPath;
                             }
@@ -199,12 +200,12 @@ exports.expressConfigure = function (hookName, context) {
                             return res.status(500).json(err);
                         });
                 }
-                
+
             });
             req.pipe(busboy);
         }
 
-        
+
     });
 
 };

@@ -1,4 +1,5 @@
-{ 
+{
+    "ep_image_upload.toolbar.image_upload.title": "Upload image",
     "ep_image_upload.error.fileSize": "File is too large",
     "ep_image_upload.error.fileType": "Invalid file type"
 }
