@@ -53,13 +53,6 @@ exports.clientVars = function (hookName, args, cb) {
     return cb({ep_image_upload: pluginSettings});
 };
 
-exports.eejsBlock_editbarMenuRight = function (hookName, args, cb) {
-    var eejsContent = eejs.require('ep_image_upload/templates/editBarButtons.ejs');
-    args.content += eejsContent;
-
-    return cb();
-};
-
 exports.eejsBlock_body = function (hookName, args, cb) {
     var modal = eejs.require('ep_image_upload/templates/modal.ejs', {}, module);
     args.content += modal;
@@ -79,7 +72,7 @@ exports.padInitToolbar = function (hookName, args) {
     var addImageButton = toolbar.button({
         localizationId: 'ep_image_upload.toolbar.image_upload.title',
         command: 'addImage',
-        class: 'buttonicon ep_image_upload image_upload'
+        class: 'buttonicon ep_image_upload image_upload buttonicon-picture'
     });
 
     toolbar.registerButton('addImage', addImageButton);

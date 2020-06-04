@@ -62,7 +62,7 @@ exports.postToolbarInit = function (hook_name, context) {
                     var errorMessage = window._('ep_image_upload.error.fileType');
                     $('#imageUploadModalError .error').html(errorMessage);
                     $('#imageUploadModalError').show();
-                    
+
                     return;
                 }
             }
@@ -73,7 +73,7 @@ exports.postToolbarInit = function (hook_name, context) {
                 $('#imageUploadModalError').show();
                 validSize = false;
 
-                return;    
+                return;
             }
             if (clientVars.ep_image_upload.storageType === 'base64') {
                 $('#imageUploadModalLoader').hide();
@@ -152,7 +152,7 @@ exports.aceDomLineProcessLineAttributes = function (name, context) {
 
     if (!imgType) return [];
 
-    var randomId = Math.floor((Math.random() * 100000) + 1); 
+    var randomId = Math.floor((Math.random() * 100000) + 1);
     var template = '<span id="' + randomId + '" class="image">';
     if (imgType[1]) {
         var preHtml = template + imgType[1] + ' >';
@@ -165,7 +165,7 @@ exports.aceDomLineProcessLineAttributes = function (name, context) {
 
         return [modifier];
     }
-    
+
     return [];
 };
 
@@ -192,5 +192,5 @@ exports.collectContentImage = function (name, context) {
 };
 
 exports.aceRegisterBlockElements = function () {
-    return ['img']; 
+    return ['img'];
 };
