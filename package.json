@@ -10,7 +10,7 @@
   "contributors": [],
   "dependencies": {
     "busboy": "0.2.14",
-    "lodash": "4.17.12",
+    "lodash": "4.17.19",
     "mime-db": "1.33.0",
     "stream_upload": "0.0.5",
     "uuid": "3.2.1"
