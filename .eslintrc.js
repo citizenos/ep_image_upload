@@ -177,13 +177,13 @@ module.exports = {
         'no-mixed-operators': [
             'error',
             {
-                "groups": [
-                    ["&", "|", "^", "~", "<<", ">>", ">>>"],
-                    ["==", "!=", "===", "!==", ">", ">=", "<", "<="],
-                    ["&&", "||"],
-                    ["in", "instanceof"]
+                'groups': [
+                    ['&', '|', '^', '~', '<<', '>>', '>>>'],
+                    ['==', '!=', '===', '!==', '>', '>=', '<', '<='],
+                    ['&&', '||'],
+                    ['in', 'instanceof']
                 ],
-                "allowSamePrecedence": true
+                'allowSamePrecedence': true
             }
         ],
         'no-mixed-requires': 'error',

@@ -6,16 +6,23 @@
  * @see {@link http://etherpad.org/doc/v1.5.7/#index_server_side_hooks}
  */
 
-var eejs = require('ep_etherpad-lite/node/eejs/');
-var Changeset = require('ep_etherpad-lite/static/js/Changeset');
-var settings = require('ep_etherpad-lite/node/utils/Settings');
-var Busboy = require('busboy');
-var StreamUpload = require('stream_upload');
-var uuid = require('uuid');
-var path = require('path');
-var mimetypes = require('mime-db');
-var url = require('url');
+const eejs = require('ep_etherpad-lite/node/eejs/');
+const settings = require('ep_etherpad-lite/node/utils/Settings');
+const Busboy = require('busboy');
+const StreamUpload = require('stream_upload');
+const uuid = require('uuid');
+const path = require('path');
+const mimetypes = require('mime-db');
+const url = require('url');
 
+
+exports.loadSettings = function (hook, context, cb) {
+    if (JSON.stringify(context.settings.toolbar).indexOf('addImage') === -1) {
+        context.settings.toolbar.right.push(['addImage']);
+    }
+
+    return cb();
+}
 /**
  * ClientVars hook
  *
@@ -30,10 +37,13 @@ var url = require('url');
  * @see {@link http://etherpad.org/doc/v1.5.7/#index_clientvars}
  */
 exports.clientVars = function (hookName, args, cb) {
-    var pluginSettings = {
+    const pluginSettings = {
         storageType: 'base64'
     };
-    var keys = Object.keys(settings.ep_image_upload);
+    if (!settings.ep_image_upload) {
+        settings.ep_image_upload = {};
+    }
+    const keys = Object.keys(settings.ep_image_upload);
     keys.forEach(function (key) {
         if (key !== 'storage') {
             pluginSettings[key] = settings.ep_image_upload[key];
@@ -54,22 +64,22 @@ exports.clientVars = function (hookName, args, cb) {
 };
 
 exports.eejsBlock_body = function (hookName, args, cb) {
-    var modal = eejs.require('ep_image_upload/templates/modal.ejs', {}, module);
+    const modal = eejs.require('ep_image_upload/templates/modal.ejs', {}, module);
     args.content += modal;
 
     return cb();
 };
 
 exports.eejsBlock_styles = function (hookName, args, cb) {
-    var style = eejs.require('ep_image_upload/templates/styles.ejs', {}, module);
+    const style = eejs.require('ep_image_upload/templates/styles.ejs', {}, module);
     args.content += style;
 
     return cb();
 };
 
 exports.padInitToolbar = function (hookName, args) {
-    var toolbar = args.toolbar;
-    var addImageButton = toolbar.button({
+    const toolbar = args.toolbar;
+    const addImageButton = toolbar.button({
         localizationId: 'ep_image_upload.toolbar.image_upload.title',
         command: 'addImage',
         class: 'buttonicon ep_image_upload image_upload buttonicon-picture'
@@ -78,47 +88,25 @@ exports.padInitToolbar = function (hookName, args) {
     toolbar.registerButton('addImage', addImageButton);
 };
 
-var _analyzeLine = function (alineAttrs, apool) {
-    var image = null;
-    if (alineAttrs) {
-        var opIter = Changeset.opIterator(alineAttrs);
-        if (opIter.hasNext()) {
-            var op = opIter.next();
-            image = Changeset.opAttributeValue(op, 'img', apool);
-        }
-    }
 
-    return image;
-};
-
-exports.getLineHTMLForExport = function (hook, context) {
-    var image = _analyzeLine(context.attribLine, context.apool);
-    if (image) {
-        context.lineContent = image;
-    }
-};
-
-var drainStream = function (stream) {
+const drainStream = function (stream) {
     stream.on('readable', stream.read.bind(stream));
 };
 
 exports.expressConfigure = function (hookName, context) {
     context.app.post('/p/:padId/pluginfw/ep_image_upload/upload', function (req, res, next) {
-        console.debug('EP_IMAGE_UPLOAD SETTINGS', settings.ep_image_upload);
-
-        console.debug('EP_IMAGE_UPLOAD POST PARAMS', req.params);
-
-        var padId = req.params.padId;
-        var imageUpload = new StreamUpload({
+        const padId = req.params.padId;
+        let busboy;
+        const imageUpload = new StreamUpload({
             extensions: settings.ep_image_upload.fileTypes,
             maxSize: settings.ep_image_upload.maxFileSize,
             baseFolder: settings.ep_image_upload.storage.baseFolder,
             storage: settings.ep_image_upload.storage
         });
-        var storageConfig = settings.ep_image_upload.storage;
+        const storageConfig = settings.ep_image_upload.storage;
         if (storageConfig) {
             try {
-                var busboy = new Busboy({
+                busboy = new Busboy({
                     headers: req.headers,
                     limits: {
                         fileSize: settings.ep_image_upload.maxFileSize
@@ -130,7 +118,7 @@ exports.expressConfigure = function (hookName, context) {
                 return next(error);
             }
 
-            var isDone;
+            let isDone;
             var done = function (error) {
                 if (error) {
                     console.error('EP_IMAGE_UPLOAD UPLOAD ERROR', error);
