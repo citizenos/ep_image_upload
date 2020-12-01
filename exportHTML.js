@@ -2,22 +2,22 @@
 
 const Changeset = require('ep_etherpad-lite/static/js/Changeset');
 
-const _analyzeLine = function (alineAttrs, apool) {
-    var image = null;
-    if (alineAttrs) {
-        var opIter = Changeset.opIterator(alineAttrs);
-        if (opIter.hasNext()) {
-            var op = opIter.next();
-            image = Changeset.opAttributeValue(op, 'img', apool);
-        }
+const _analyzeLine = (alineAttrs, apool) => {
+  let image = null;
+  if (alineAttrs) {
+    const opIter = Changeset.opIterator(alineAttrs);
+    if (opIter.hasNext()) {
+      const op = opIter.next();
+      image = Changeset.opAttributeValue(op, 'img', apool);
     }
+  }
 
-    return image;
+  return image;
 };
 
-exports.getLineHTMLForExport = function (hook, context) {
-    var image = _analyzeLine(context.attribLine, context.apool);
-    if (image) {
-        context.lineContent = image;
-    }
+exports.getLineHTMLForExport = async (hook, context) => {
+  const image = _analyzeLine(context.attribLine, context.apool);
+  if (image) {
+    context.lineContent = image;
+  }
 };

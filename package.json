@@ -19,9 +19,6 @@
     "type": "git",
     "url": "git+https://github.com/citizenos/ep_image_upload.git"
   },
-  "engines": {
-    "node": "*"
-  },
   "bugs": {
     "url": "https://github.com/citizenos/ep_image_upload/issues"
   },
