@@ -32,6 +32,27 @@ Sample configuration in `settings.json` for using with local (disk) storage:
 ``` javascript
 "ep_image_upload":{
     "storage":{
+      "type": "local",
+      "baseFolder": "/var/www/images",
+      "baseURL": "http://www.my-site.com/images/"
+    },
+    "fileTypes": ["jpeg", "jpg", "bmp", "gif","png"],
+    "maxFileSize": 5000000 
+  },
+```
+
+`fileTypes` - if left blank file mime-type is checked to match `image.*`
+
+`maxFileSize` - file size in bytes. If not set there is no limit
+
+```"baseURL"``` -> URL path to "baseFolder". For example if ```"baseFolder"``` is "/path/to/my_etherpad_folder/src/images"``` then ```http://myetherpad.com:9001/static/images/"``` 
+
+### Amazon S3 storage
+
+Sample configuration in `settings.json` for using with Amazon S3:
+``` javascript
+"ep_image_upload":{
+    "storage":{
       "type": "S3",
       "accessKeyId": "YOUR_S3_ACCESS_KEY",
       "secretAccessKey": "YOUR_S3_ACCESS_KEY_SECRET",
@@ -51,29 +72,6 @@ Sample configuration in `settings.json` for using with local (disk) storage:
 `fileTypes` - if left blank file mime-type is checked to match `image.*`
 
 `maxFileSize` - file size in bytes. If not set there is no limit
-
-
-### Amazon S3 storage
-
-Sample configuration in `settings.json` for using with Amazon S3:
-
-``` javascript
-"ep_image_upload":{
-    "storage":{
-      "type": "local",
-      "baseFolder": "/var/www/images",
-      "baseURL": "http://www.my-site.com/images/"
-    },
-    "fileTypes": ["jpeg", "jpg", "bmp", "gif","png"],
-    "maxFileSize": 5000000 
-  },
-```
-
-`fileTypes` - if left blank file mime-type is checked to match `image.*`
-
-`maxFileSize` - file size in bytes. If not set there is no limit
-
-```"baseURL"``` -> URL path to "baseFolder". For example if ```"baseFolder"``` is "/path/to/my_etherpad_folder/src/images"``` then ```http://myetherpad.com:9001/static/images/"``` 
 
 Also button ```"addImage"``` must be added under ```"toolbar"```
 for example:
