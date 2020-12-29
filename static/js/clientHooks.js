@@ -38,13 +38,11 @@ const _isValid = (file) => {
         const exists = mimeType.extensions.indexOf(fileType);
         if (exists > -1) {
           validMime = true;
-
-          return false;
         }
       }
     }
     if (validMime === false) {
-      const errorMessage = window._('ep_image_upload.error.fileType');
+      let errorMessage = window._('ep_image_upload.error.fileType');
       $('#imageUploadModalError .error').html(errorMessage);
       $('#imageUploadModalError').show();
 
@@ -53,7 +51,7 @@ const _isValid = (file) => {
   }
 
   if (clientVars.ep_image_upload && file.size > clientVars.ep_image_upload.maxFileSize) {
-    const errorMessage = window._('ep_image_upload.error.fileSize');
+    let errorMessage = window._('ep_image_upload.error.fileSize');
     $('#imageUploadModalError .error').html(errorMessage);
     $('#imageUploadModalError').show();
 
@@ -165,7 +163,7 @@ exports.aceDomLineProcessLineAttributes = (name, context) => {
     const modifier = {
       preHtml,
       postHtml,
-      processedMarker: false,
+      processedMarker: true,
     };
 
     return [modifier];
