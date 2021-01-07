@@ -42,7 +42,7 @@ const _isValid = (file) => {
       }
     }
     if (validMime === false) {
-      let errorMessage = window._('ep_image_upload.error.fileType');
+      const errorMessage = window._('ep_image_upload.error.fileType');
       $('#imageUploadModalError .error').html(errorMessage);
       $('#imageUploadModalError').show();
 
@@ -51,7 +51,7 @@ const _isValid = (file) => {
   }
 
   if (clientVars.ep_image_upload && file.size > clientVars.ep_image_upload.maxFileSize) {
-    let errorMessage = window._('ep_image_upload.error.fileSize');
+    const errorMessage = window._('ep_image_upload.error.fileSize');
     $('#imageUploadModalError .error').html(errorMessage);
     $('#imageUploadModalError').show();
 
