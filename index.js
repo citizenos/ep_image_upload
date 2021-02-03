@@ -150,7 +150,7 @@ exports.expressConfigure = (hookName, context) => {
           if (baseURL.charAt(baseURL.length - 1) !== '/') {
             baseURL += '/';
           }
-          accessPath = url.URL(settings.ep_image_upload.storage.baseURL, savedFilename);
+          accessPath = new url.URL(savedFilename, settings.ep_image_upload.storage.baseURL);
           savedFilename = path.join(settings.ep_image_upload.storage.baseFolder, savedFilename);
         }
         file.on('limit', () => {
