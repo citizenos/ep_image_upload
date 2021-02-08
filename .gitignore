@@ -2,3 +2,4 @@ upload/*
 node_modules
 *~
 .ep_initialized
+node_modules/
