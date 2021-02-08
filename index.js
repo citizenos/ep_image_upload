@@ -15,7 +15,6 @@ const path = require('path');
 const mimetypes = require('mime-db');
 const url = require('url');
 
-
 exports.loadSettings = (hook, context, cb) => {
   if (JSON.stringify(context.settings.toolbar).indexOf('addImage') === -1) {
     context.settings.toolbar.right.push(['addImage']);
@@ -150,7 +149,7 @@ exports.expressConfigure = (hookName, context) => {
           if (baseURL.charAt(baseURL.length - 1) !== '/') {
             baseURL += '/';
           }
-          accessPath = url.URL(settings.ep_image_upload.storage.baseURL, savedFilename);
+          accessPath = new url.URL(settings.ep_image_upload.storage.baseURL, savedFilename);
           savedFilename = path.join(settings.ep_image_upload.storage.baseFolder, savedFilename);
         }
         file.on('limit', () => {
