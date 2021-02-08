@@ -51,7 +51,7 @@
   },
   "funding": {
     "type": "individual",
-    "url": "https://etherpad.org/"
+    "url": "https://citizenos.com/"
   },
   "peerDependencies": {
     "ep_etherpad-lite": ">=1.8.6"
