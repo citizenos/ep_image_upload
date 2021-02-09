@@ -1,3 +1,5 @@
+![Publish Status](https://github.com/citizenos/ep_image_upload/workflows/Node.js%20Package/badge.svg) ![Backend Tests Status](https://github.com/citizenos/ep_image_upload/workflows/Backend%20tests/badge.svg)
+
 # EP_image_upload
 
 Plugin to upload images to Etherpad (https://etherpad.org/).

@@ -1,7 +1,5 @@
 'use strict';
 
-const _ = require('ep_etherpad-lite/static/js/underscore');
-
 const image = {
   removeImage(lineNumber) {
     const documentAttributeManager = this.documentAttributeManager;
@@ -176,8 +174,8 @@ exports.aceEditorCSS = () => ['/ep_image_upload/static/css/ace.css'];
 
 exports.aceInitialized = (hook, context) => {
   const editorInfo = context.editorInfo;
-  editorInfo.ace_addImage = _(image.addImage).bind(context);
-  editorInfo.ace_removeImage = _(image.removeImage).bind(context);
+  editorInfo.ace_addImage = image.addImage.bind(context);
+  editorInfo.ace_removeImage = image.removeImage.bind(context);
 };
 
 exports.collectContentImage = (name, context) => {
