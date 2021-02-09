@@ -1,15 +1,13 @@
 ![Publish Status](https://github.com/citizenos/ep_image_upload/workflows/Node.js%20Package/badge.svg) ![Backend Tests Status](https://github.com/citizenos/ep_image_upload/workflows/Backend%20tests/badge.svg)
 
-# EP_image_upload
+# Image support within Etherpad
 
 Plugin to upload images to Etherpad (https://etherpad.org/).
-
-This uses image input to add images to Etherpad, it's based on ep_copy_paste_images (https://github.com/JohnMcLear/ep_copy_paste_images) module but without drag drop functionality.
 
 Supported storages:
 - Base 64 - default
 - Local (disk) storage
-- Amazon S3 
+- Amazon S3
 
 ### Base64
 
@@ -39,7 +37,7 @@ Sample configuration in `settings.json` for using with local (disk) storage:
       "baseURL": "http://www.my-site.com/images/"
     },
     "fileTypes": ["jpeg", "jpg", "bmp", "gif","png"],
-    "maxFileSize": 5000000 
+    "maxFileSize": 5000000
   },
 ```
 
@@ -47,7 +45,7 @@ Sample configuration in `settings.json` for using with local (disk) storage:
 
 `maxFileSize` - file size in bytes. If not set there is no limit
 
-```"baseURL"``` -> URL path to "baseFolder". For example if ```"baseFolder"``` is "/path/to/my_etherpad_folder/src/images"``` then ```http://myetherpad.com:9001/static/images/"``` 
+```"baseURL"``` -> URL path to "baseFolder". For example if ```"baseFolder"``` is "/path/to/my_etherpad_folder/src/images"``` then ```http://myetherpad.com:9001/static/images/"```
 
 ### Amazon S3 storage
 
@@ -74,20 +72,3 @@ Sample configuration in `settings.json` for using with Amazon S3:
 `fileTypes` - if left blank file mime-type is checked to match `image.*`
 
 `maxFileSize` - file size in bytes. If not set there is no limit
-
-Also button ```"addImage"``` must be added under ```"toolbar"```
-for example:
-
-```
-"toolbar": {
-    "left": [
-      [
-        "bold",
-        "italic",
-        "underline",
-        "strikethrough",
-        "addImage"
-      ]
-    ]
-}
-```
