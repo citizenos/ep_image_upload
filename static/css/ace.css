@@ -3,8 +3,9 @@
     position:relative;
     padding:10px 0px 10px 0px;
 }
-  
-.image > img{
+
+img{
     width:100% !important;
     height: auto !important;
+    max-height:500px;
 }

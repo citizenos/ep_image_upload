@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Image Upload', function () {
+describe('Image Translations', function () {
   // create a new pad before each test run
   beforeEach(function (cb) {
     helper.newPad(cb);
