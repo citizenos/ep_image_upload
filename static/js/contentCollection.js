@@ -31,3 +31,5 @@ exports.collectContentPost = (name, context) => {
     delete lineAttributes.img;
   }
 };
+
+exports.ccRegisterBlockElements = (name, context) => ['img'];

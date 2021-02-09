@@ -11,6 +11,7 @@
         "aceEditorCSS": "ep_image_upload/static/js/clientHooks",
         "collectContentImage": "ep_image_upload/static/js/contentCollection",
         "collectContentPre": "ep_image_upload/static/js/contentCollection",
+        "ccRegisterBlockElements": "ep_image_upload/static/js/contentCollection",
         "collectContentPost": "ep_image_upload/static/js/contentCollection"
       },
       "hooks":{
@@ -22,7 +23,8 @@
         "expressConfigure": "ep_image_upload/index",
         "eejsBlock_editbarMenuLeft": "ep_image_upload/editbar",
         "collectContentPre": "ep_image_upload/static/js/contentCollection",
-        "collectContentPost": "ep_image_upload/static/js/contentCollection"
+        "collectContentPost": "ep_image_upload/static/js/contentCollection",
+        "ccRegisterBlockElements": "ep_image_upload/static/js/contentCollection"
       }
     }
   ]
