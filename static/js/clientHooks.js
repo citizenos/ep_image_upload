@@ -24,8 +24,8 @@ exports.aceDomLineProcessLineAttributes = (name, context) => {
   if (!imgType) return [];
   const randomId = Math.floor((Math.random() * 100000) + 1);
   if (imgType[1]) {
-    const preHtml = `<span id="${randomId}" class="image"><img src="${imgType[1]}">`;
-    const postHtml = '</span>';
+    const preHtml = `<img src="${imgType[1]}">`;
+    const postHtml = '';
     const modifier = {
       preHtml,
       postHtml,
