@@ -8,7 +8,7 @@ const _analyzeLine = (alineAttrs, apool) => {
     const opIter = Changeset.opIterator(alineAttrs);
     if (opIter.hasNext()) {
       const op = opIter.next();
-      image = Changeset.opAttributeValue(op, 'img', apool).replace(/"/g, "'");
+      image = Changeset.opAttributeValue(op, 'img', apool);
     }
   }
 

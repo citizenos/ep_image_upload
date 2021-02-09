@@ -8,7 +8,8 @@
         "aceDomLineProcessLineAttributes" : "ep_image_upload/static/js/clientHooks",
         "aceInitialized": "ep_image_upload/static/js/clientHooks",
         "aceRegisterBlockElements": "ep_image_upload/static/js/clientHooks",
-        "aceEditorCSS": "ep_image_upload/static/js/clientHooks"
+        "aceEditorCSS": "ep_image_upload/static/js/clientHooks",
+        "collectContentImage": "ep_image_upload/static/js/clientHooks"
       },
       "hooks":{
         "loadSettings": "ep_image_upload/index",
