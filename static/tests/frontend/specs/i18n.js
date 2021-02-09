@@ -7,11 +7,12 @@ describe('Image Translations', function () {
     this.timeout(60000);
   });
 
+  const titles = {
+    en: 'Upload image',
+    et: 'Lae pilt üles',
+  };
+
   const changeEtherpadLanguageTo = function (lang, callback) {
-    const titles = {
-      en: 'Upload image',
-      et: 'Lae pilt üles',
-    };
     const chrome$ = helper.padChrome$;
 
     // click on the settings button to make settings visible
@@ -30,13 +31,11 @@ describe('Image Translations', function () {
         .done(callback);
   };
 
-  it('Checks i18n', async function (done) {
+  it('Checks i18n', async function () {
     const chrome$ = helper.padChrome$;
-    this.timeout(1000);
-    const originalValue = chrome$('.image_upload').parent()[0].title;
+    this.timeout(2000);
     await changeEtherpadLanguageTo('et');
     // make sure the text hasn't changed
-    expect(originalValue).to.not.eql(chrome$('.image_upload').parent()[0].title);
-    done();
+    helper.waitForPromise(() => chrome$('.image_upload').parent()[0].title === titles.et);
   });
 });
