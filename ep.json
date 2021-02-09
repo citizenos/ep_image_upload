@@ -9,14 +9,14 @@
         "aceInitialized": "ep_image_upload/static/js/clientHooks",
         "aceRegisterBlockElements": "ep_image_upload/static/js/clientHooks",
         "aceEditorCSS": "ep_image_upload/static/js/clientHooks",
-        "collectContentImage": "ep_image_upload/static/js/clientHooks"
+        "collectContentImage": "ep_image_upload/static/js/contentCollection"
       },
       "hooks":{
         "loadSettings": "ep_image_upload/index",
         "eejsBlock_styles": "ep_image_upload/index",
         "clientVars": "ep_image_upload/index",
         "eejsBlock_body": "ep_image_upload/index",
-        "collectContentImage": "ep_image_upload/static/js/clientHooks",
+        "collectContentImage": "ep_image_upload/static/js/contentCollection",
         "getLineHTMLForExport": "ep_image_upload/exportHTML",
         "expressConfigure": "ep_image_upload/index",
         "eejsBlock_editbarMenuLeft": "ep_image_upload/editbar"

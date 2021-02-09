@@ -57,6 +57,7 @@ const _isValid = (file) => {
 
   return true;
 };
+
 exports.postToolbarInit = (hook, context) => {
   const toolbar = context.toolbar;
   $('#closeErrorModalButton').on('click', () => {
@@ -174,17 +175,6 @@ exports.aceInitialized = (hook, context) => {
   const editorInfo = context.editorInfo;
   editorInfo.ace_addImage = image.addImage.bind(context);
   editorInfo.ace_removeImage = image.removeImage.bind(context);
-};
-
-exports.collectContentImage = (name, context) => {
-  const tname = context.tname;
-  const lineAttributes = context.state.lineAttributes;
-  if (tname === 'div' || tname === 'p') {
-    delete lineAttributes.img;
-  }
-  if (tname === 'img') {
-    lineAttributes.img = context.node.outerHTML;
-  }
 };
 
 exports.aceRegisterBlockElements = () => ['img'];
