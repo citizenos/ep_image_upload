@@ -50,7 +50,7 @@ describe('export image to HTML', function () {
 
   context('when pad contains img', function () {
     before(async function () {
-      html = () => buildHTML('<img src="">');
+      html = () => buildHTML(`<img src="${uploadSVG}">`);
     });
 
     it('returns ok', function (done) {
@@ -65,10 +65,13 @@ describe('export image to HTML', function () {
             const html = res.body.data.html;
             const expectedHTML =
               '<img';
-            console.warn(res);
+            console.warn(res.body.data.html);
             if (html.indexOf(expectedHTML) === -1) throw new Error('No image tag detected');
           })
           .end(done);
     });
   });
 });
+
+// eslint-disable-next-line max-len
+const uploadSVG = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
