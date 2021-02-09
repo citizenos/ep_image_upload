@@ -63,7 +63,7 @@ exports.postToolbarInit = (hook, context) => {
   $('#closeErrorModalButton').on('click', () => {
     $('#imageUploadModalError').hide();
   });
-  toolbar.registerCommand('addImage', () => {
+  toolbar.registerCommand('imageUpload', () => {
     $(document).find('body').find('#imageInput').remove();
     const fileInputHtml = `<input
     style="width:1px;height:1px;z-index:-10000;"

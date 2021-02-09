@@ -80,18 +80,6 @@ exports.eejsBlock_styles = (hookName, args, cb) => {
   return cb();
 };
 
-exports.padInitToolbar = (hookName, args) => {
-  const toolbar = args.toolbar;
-  const addImageButton = toolbar.button({
-    localizationId: 'ep_image_upload.toolbar.image_upload.title',
-    command: 'addImage',
-    class: 'buttonicon ep_image_upload image_upload buttonicon-picture',
-  });
-
-  toolbar.registerButton('addImage', addImageButton);
-};
-
-
 const drainStream = (stream) => {
   stream.on('readable', stream.read.bind(stream));
 };
