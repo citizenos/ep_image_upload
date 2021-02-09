@@ -18,6 +18,10 @@ const _analyzeLine = (alineAttrs, apool) => {
 exports.getLineHTMLForExport = async (hook, context) => {
   const image = _analyzeLine(context.attribLine, context.apool);
   if (image) {
-    context.lineContent = `<p><img src="${image}"></p>`;
+    context.lineContent = `<img src="${image}">`;
   }
+};
+
+exports.stylesForExport = (hook, padId, cb) => {
+  cb('img{max-width:100%}');
 };

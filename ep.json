@@ -20,6 +20,7 @@
         "eejsBlock_body": "ep_image_upload/index",
         "collectContentImage": "ep_image_upload/static/js/contentCollection",
         "getLineHTMLForExport": "ep_image_upload/exportHTML",
+        "stylesForExport": "ep_image_upload/exportHTML",
         "expressConfigure": "ep_image_upload/index",
         "eejsBlock_editbarMenuLeft": "ep_image_upload/editbar",
         "collectContentPre": "ep_image_upload/static/js/contentCollection",
