@@ -15,14 +15,6 @@ const path = require('path');
 const mimetypes = require('mime-db');
 const url = require('url');
 
-exports.loadSettings = (hook, context, cb) => {
-  if (JSON.stringify(context.settings.toolbar).indexOf('addImage') === -1) {
-    context.settings.toolbar.right.push(['addImage']);
-  }
-
-  return cb();
-};
-
 /**
  * ClientVars hook
  *
