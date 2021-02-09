@@ -59,12 +59,13 @@ describe('export image to HTML', function () {
           .expect(200, done);
     });
 
-    it('returns HTML with Subscript HTML tags', function (done) {
+    it('returns HTML with img HTML tags', function (done) {
       api.get(getHTMLEndPointFor(padID))
           .expect((res) => {
             const html = res.body.data.html;
             const expectedHTML =
-              '<img src=""><br><br></body></html>';
+              '<img';
+            console.warn(res);
             if (html.indexOf(expectedHTML) === -1) throw new Error('No image tag detected');
           })
           .end(done);
