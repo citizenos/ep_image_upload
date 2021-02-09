@@ -3,7 +3,7 @@
     {
       "name": "ep_image_upload",
       "client_hooks": {
-        "postToolbarInit": "ep_image_upload/static/js/clientHooks",
+        "postToolbarInit": "ep_image_upload/static/js/toolbar",
         "aceAttribsToClasses" : "ep_image_upload/static/js/clientHooks",
         "aceDomLineProcessLineAttributes" : "ep_image_upload/static/js/clientHooks",
         "aceInitialized": "ep_image_upload/static/js/clientHooks",
