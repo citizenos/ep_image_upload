@@ -10,13 +10,10 @@ exports.collectContentImage = (name, context) => {
     delete lineAttributes.img;
   }
   if (tname === 'img') {
-    if (context.node.currentSrc) {
-      // client
-      lineAttributes.img = context.node.currentSrc;
-    } else {
-      // server
-      lineAttributes.img = context.node.outerHTML;
-    }
+    // client
+    if (context.node.currentSrc) lineAttributes.img = context.node.currentSrc;
+    // server
+    if (context.node.attribs) lineAttributes.img = context.node.attribs.src;
   }
 };
 
