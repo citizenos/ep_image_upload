@@ -1,5 +1,7 @@
 ![Publish Status](https://github.com/citizenos/ep_image_upload/workflows/Node.js%20Package/badge.svg) ![Backend Tests Status](https://github.com/citizenos/ep_image_upload/workflows/Backend%20tests/badge.svg)
 
+![Screenshot](https://user-images.githubusercontent.com/220864/107759338-13975d00-6d20-11eb-8ea7-cb16a2bd8776.gif)
+
 # Image support within Etherpad
 
 Plugin to upload images to Etherpad (https://etherpad.org/).
