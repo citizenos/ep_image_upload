@@ -8,7 +8,7 @@ describe('Image Upload', function () {
   });
 
   it('Puts an image in the pad and ensure it isnt removed', async function (done) {
-    this.timeout(2000);
+    this.timeout(10000);
     const inner$ = helper.padInner$;
     inner$('div:eq(2)').html('hello world');
     inner$('div').first().html(`<img src="${uploadSVG}">`);
@@ -19,7 +19,7 @@ describe('Image Upload', function () {
   });
 
   it('Puts an image in the pad and next line is not modified', async function (done) {
-    this.timeout(1000);
+    this.timeout(10000);
     const inner$ = helper.padInner$;
 
     // puts hello world on second line
