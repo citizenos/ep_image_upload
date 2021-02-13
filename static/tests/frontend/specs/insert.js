@@ -7,31 +7,30 @@ describe('Image Upload', function () {
     this.timeout(60000);
   });
 
-  it('Puts an image in the pad and ensure it isnt removed', async function (done) {
+  it('Puts an image in the pad and ensure it isnt removed', async function () {
     this.timeout(10000);
     const inner$ = helper.padInner$;
     inner$('div:eq(2)').html('hello world');
     inner$('div').first().html(`<img src="${uploadSVG}">`);
-    helper.waitForPromise(() => inner$('div').first().html().indexOf(uploadSVG) !== -1, 10000);
-    helper.waitForPromise(() => inner$('div:eq(2)').text().indexOf('Hello world') !== -1, 10000);
-    // expect(inner$("div").first().html()).to.not.eql(chrome$('.image_upload').parent()[0].title);
-    done();
+    await helper.waitForPromise(() => inner$('div').first().html().indexOf(uploadSVG) !== -1, 1000);
+    await helper.waitForPromise(
+        () => inner$('div:eq(2)').text().indexOf('hello world') !== -1, 1000);
   });
 
-  it('Puts an image in the pad and next line is not modified', async function (done) {
+  it('Puts an image in the pad and next line is not modified', async function () {
     this.timeout(10000);
     const inner$ = helper.padInner$;
 
     // puts hello world on second line
     inner$('div:eq(1)').html('hello world');
-    helper.waitForPromise(() => inner$('div').first().text() === 'hello world', 10000);
+    await helper.waitForPromise(() => inner$('div:eq(1)').text() === 'hello world', 1000);
 
     // puts image on first line
     inner$('div').first().html(`<img src="${uploadSVG}">`);
 
-    helper.waitForPromise(() => inner$('div').first().html().indexOf(uploadSVG) !== -1, 10000);
-    helper.waitForPromise(() => inner$('div:eq(1)').text().indexOf('Hello world') !== -1, 10000);
-    done();
+    await helper.waitForPromise(() => inner$('div').first().html().indexOf(uploadSVG) !== -1, 1000);
+    await helper.waitForPromise(
+        () => inner$('div:eq(1)').text().indexOf('hello world') !== -1, 1000);
   });
 });
 
