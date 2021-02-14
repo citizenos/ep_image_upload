@@ -25,7 +25,8 @@
         "eejsBlock_editbarMenuLeft": "ep_image_upload/editbar",
         "collectContentPre": "ep_image_upload/static/js/contentCollection",
         "collectContentPost": "ep_image_upload/static/js/contentCollection",
-        "ccRegisterBlockElements": "ep_image_upload/static/js/contentCollection"
+        "ccRegisterBlockElements": "ep_image_upload/static/js/contentCollection",
+        "loadSettings": "ep_image_upload/settings"
       }
     }
   ]
