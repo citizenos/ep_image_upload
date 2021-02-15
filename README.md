@@ -2,6 +2,9 @@
 
 ![Screenshot](https://user-images.githubusercontent.com/220864/107759338-13975d00-6d20-11eb-8ea7-cb16a2bd8776.gif)
 
+# Important
+Due to a WIP issue within Etherpad you will need to manually modify settings.json and set ``maxHttpBufferSize`` value to ``10000000`` to allow uploads larger than 10Kb.
+
 # Image support within Etherpad
 
 Plugin to upload images to Etherpad (https://etherpad.org/).
