@@ -1,7 +1,11 @@
 'use strict';
 
 exports.loadSettings = (hookName, settings, cb) => {
-  // Setting maxHttpBufferSize to 10 MiB :)
-  settings.settings.socketio.maxHttpBufferSize = 100000000;
+  if (!settings.settings.socketIo) {
+    console.warn('Please update Etherpad to >=1.8.8');
+  } else {
+    // Setting maxHttpBufferSize to 10 MiB :)
+    settings.settings.socketIo.maxHttpBufferSize = 100000000;
+  }
   cb();
 };
