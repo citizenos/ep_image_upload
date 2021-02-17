@@ -59,14 +59,14 @@ exports.clientVars = (hookName, args, cb) => {
 };
 
 exports.eejsBlock_body = (hookName, args, cb) => {
-  const modal = eejs.require('ep_image_upload/templates/modal.ejs', {}, module);
+  const modal = eejs.require('ep_image_upload/templates/modal.ejs');
   args.content += modal;
 
   return cb();
 };
 
 exports.eejsBlock_styles = (hookName, args, cb) => {
-  const style = eejs.require('ep_image_upload/templates/styles.ejs', {}, module);
+  const style = eejs.require('ep_image_upload/templates/styles.ejs');
   args.content += style;
 
   return cb();
