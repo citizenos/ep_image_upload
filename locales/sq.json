@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Eraldkerciku"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "Ngarko imazhin",
+	"ep_image_upload.error.fileSize": "Skedari është shumë i madh",
+	"ep_image_upload.error.fileType": "Lloj skedari i pavlefshëm"
+}

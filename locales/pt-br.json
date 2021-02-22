@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Mariagarbin"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "Carregar imagem",
+	"ep_image_upload.error.fileSize": "O arquivo é muito grande",
+	"ep_image_upload.error.fileType": "Tipo de arquivo inválido"
+}

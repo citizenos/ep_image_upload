@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kly"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "上傳圖片",
+	"ep_image_upload.error.fileSize": "檔案太大",
+	"ep_image_upload.error.fileType": "無效檔案類型"
+}

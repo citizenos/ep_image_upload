@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Bjankuloski06"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "Подигни слика",
+	"ep_image_upload.error.fileSize": "Податотеката е преголема",
+	"ep_image_upload.error.fileType": "Неважечки податотечен тип"
+}

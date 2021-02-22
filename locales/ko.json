@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ykhwong"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "이미지 업로드",
+	"ep_image_upload.error.fileSize": "파일이 너무 큽니다",
+	"ep_image_upload.error.fileType": "유효하지 않은 파일 유형"
+}

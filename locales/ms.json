@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Tofeiku"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "Muat naik gambar",
+	"ep_image_upload.error.fileSize": "Fail terlalu besar",
+	"ep_image_upload.error.fileType": "Jenis fail tidak sah"
+}

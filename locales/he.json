@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"YaronSh"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "העלאת תמונה",
+	"ep_image_upload.error.fileSize": "הקובץ גדול מדי",
+	"ep_image_upload.error.fileType": "סוג הקובץ שגוי"
+}
