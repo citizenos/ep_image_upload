@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"FF11"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "Bild hochladen",
+	"ep_image_upload.error.fileSize": "Datei ist zu groß",
+	"ep_image_upload.error.fileType": "Ungültiger Dateityp"
+}

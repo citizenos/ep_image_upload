@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Sabelöga"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "Ladda upp bild",
+	"ep_image_upload.error.fileSize": "Filen är för stor",
+	"ep_image_upload.error.fileType": "Ogiltig filtyp"
+}
