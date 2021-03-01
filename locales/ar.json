@@ -4,5 +4,6 @@
 			"محمد أحمد عبد الفتاح"
 		]
 	},
-	"ep_image_upload.toolbar.image_upload.title": "ارفع صورة"
+	"ep_image_upload.toolbar.image_upload.title": "ارفع صورة",
+	"ep_image_upload.error.fileSize": "الملف ضخم جدًّا"
 }
