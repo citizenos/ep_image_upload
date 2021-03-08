@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Alexgabi"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "Igo irudia",
+	"ep_image_upload.error.fileSize": "Fitxategi handiegia",
+	"ep_image_upload.error.fileType": "Fitxategi mota baliogabea"
+}

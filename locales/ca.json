@@ -4,5 +4,7 @@
 			"Mguix"
 		]
 	},
-	"ep_image_upload.error.fileSize": "El fitxer és massa gran."
+	"ep_image_upload.toolbar.image_upload.title": "Carregar la imatge",
+	"ep_image_upload.error.fileSize": "El fitxer és massa gran.",
+	"ep_image_upload.error.fileType": "El tipus de fitxer no és vàlid"
 }
