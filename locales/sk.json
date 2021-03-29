@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Yardom78"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "Nahrať obrázok",
+	"ep_image_upload.error.fileSize": "Súbor je príliš veľký",
+	"ep_image_upload.error.fileType": "Neplatný typ súboru"
+}
