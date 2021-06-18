@@ -47,7 +47,7 @@ Sample configuration in `settings.json` for using with local (disk) storage:
 
 `maxFileSize` - file size in bytes. If not set there is no limit
 
-```"baseURL"``` -> URL path to "baseFolder". For example if ```"baseFolder"``` is "/path/to/my_etherpad_folder/src/images"``` then ```http://myetherpad.com:9001/static/images/"```
+`baseURL` - URL path to "baseFolder". For example if `baseFolder` is "/path/to/my_etherpad_folder/src/images" then `http://myetherpad.com:9001/static/images/`
 
 ### Amazon S3 storage
 
