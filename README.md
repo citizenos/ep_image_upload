@@ -47,7 +47,9 @@ Sample configuration in `settings.json` for using with local (disk) storage:
 
 `maxFileSize` - file size in bytes. If not set there is no limit
 
-```"baseURL"``` -> URL path to "baseFolder". For example if ```"baseFolder"``` is "/path/to/my_etherpad_folder/src/images"``` then ```http://myetherpad.com:9001/static/images/"```
+`baseURL` - URL path to "baseFolder". For example if `baseFolder` is "/path/to/my_etherpad_folder/src/images" then `http://myetherpad.com:9001/static/images/`
+
+`urlPrefix` - prefix for the url (useful if you have deployed ep in a docker behind a nginx). E.g., if your ep is on www.example.com/etherpad/api/ then "/etherpad/api/"
 
 ### Amazon S3 storage
 
