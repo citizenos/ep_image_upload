@@ -7,73 +7,35 @@ let agent;
 const apiKey = common.apiKey;
 const apiVersion = 1;
 
-// Creates a pad and returns the pad id. Calls the callback when finished.
-const createPad = function (padID, callback) {
-  agent.get(`/api/${apiVersion}/createPad?apikey=${apiKey}&padID=${padID}`)
-      .end((err, res) => {
-        if (err || (res.body.code !== 0)) callback(new Error('Unable to create new Pad'));
-        callback(padID);
-      });
+const createPad = async (padID) => {
+  const res = await agent.get(`/api/${apiVersion}/createPad?apikey=${apiKey}&padID=${padID}`);
+  if (res.body.code !== 0) throw new Error('Unable to create new Pad');
 };
 
-const setHTML = function (padID, html, callback) {
-  agent.get(`/api/${apiVersion}/setHTML?apikey=${apiKey}&padID=${padID}&html=${html}`)
-      .end((err, res) => {
-        if (err || (res.body.code !== 0)) callback(new Error('Unable to set pad HTML'));
-
-        callback(null, padID);
-      });
+const setHTML = async (padID, html) => {
+  const res =
+      await agent.get(`/api/${apiVersion}/setHTML?apikey=${apiKey}&padID=${padID}&html=${html}`);
+  if (res.body.code !== 0) throw new Error('Unable to set pad HTML');
 };
 
-const getHTMLEndPointFor = function (padID, callback) {
-  return `/api/${apiVersion}/getHTML?apikey=${apiKey}&padID=${padID}`;
-};
-
-
-const buildHTML = function (body) {
-  return `<html><body>${body}</body></html>`;
-};
-
-
-describe('export image to HTML', function () {
+describe(__filename, function () {
   let padID;
-  let html;
 
   before(async function () { agent = await common.init(); });
 
   // create a new pad before each test run
-  beforeEach(function (done) {
+  beforeEach(async function () {
     padID = randomString(5);
-
-    createPad(padID, () => {
-      setHTML(padID, html(), done);
-    });
+    await createPad(padID);
+    const uploadSVG =
+        'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+    await setHTML(padID, `<html><body><img src="${uploadSVG}"></body></html>`);
   });
 
-  context('when pad contains img', function () {
-    before(async function () {
-      html = () => buildHTML(`<img src="${uploadSVG}">`);
-    });
-
-    it('returns ok', function (done) {
-      agent.get(getHTMLEndPointFor(padID))
-          .expect('Content-Type', /json/)
-          .expect(200, done);
-    });
-
-    it('returns HTML with img HTML tags', function (done) {
-      agent.get(getHTMLEndPointFor(padID))
-          .expect((res) => {
-            const html = res.body.data.html;
-            const expectedHTML =
-              '<img';
-            console.warn(res.body.data.html);
-            if (html.indexOf(expectedHTML) === -1) throw new Error('No image tag detected');
-          })
-          .end(done);
-    });
+  it('returns HTML with img HTML tags', async function () {
+    const res = await agent.get(`/api/${apiVersion}/getHTML?apikey=${apiKey}&padID=${padID}`)
+        .expect(200)
+        .expect('Content-Type', /json/);
+    if (!res.body.data.html.includes('<img')) throw new Error('No image tag detected');
   });
 });
-
-// eslint-disable-next-line max-len
-const uploadSVG = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
