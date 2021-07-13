@@ -39,8 +39,7 @@ Sample configuration in `settings.json` for using with local (disk) storage:
       "baseURL": "http://www.my-site.com/images/"
     },
     "fileTypes": ["jpeg", "jpg", "bmp", "gif","png"],
-    "maxFileSize": 5000000,
-    "urlPrefix": "/p/"
+    "maxFileSize": 5000000
   },
 ```
 
@@ -49,8 +48,6 @@ Sample configuration in `settings.json` for using with local (disk) storage:
 `maxFileSize` - file size in bytes. If not set there is no limit
 
 ```"baseURL"``` -> URL path to "baseFolder". For example if ```"baseFolder"``` is "/path/to/my_etherpad_folder/src/images"``` then ```http://myetherpad.com:9001/static/images/"```
-
-`urlPrefix` - Prepended to the URL to load the images
 
 ### Amazon S3 storage
 
@@ -66,8 +63,7 @@ Sample configuration in `settings.json` for using with Amazon S3:
       "baseFolder": "FOLDER_PATH"
     },
     "fileTypes": ["jpeg", "jpg", "bmp", "gif","png"],
-    "maxFileSize": 5000000,
-    "urlPrefix": "/p/"
+    "maxFileSize": 5000000
   },
 ```
 
@@ -78,5 +74,3 @@ Sample configuration in `settings.json` for using with Amazon S3:
 `fileTypes` - if left blank file mime-type is checked to match `image.*`
 
 `maxFileSize` - file size in bytes. If not set there is no limit
-
-`urlPrefix` - Prepended to the URL to load the images
