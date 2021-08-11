@@ -90,7 +90,7 @@ exports.postToolbarInit = (hook, context) => {
         $('#imageUploadModalLoader').show();
         $.ajax({
           type: 'POST',
-          url: `/p/${clientVars.padId}/pluginfw/ep_image_upload/upload`,
+          url: `${clientVars.padId}/pluginfw/ep_image_upload/upload`,
           xhr: () => {
             const myXhr = $.ajaxSettings.xhr();
 
