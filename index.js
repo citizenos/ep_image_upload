@@ -172,10 +172,10 @@ exports.padRemove = async (hookName, context) => {
   if (settings.ep_image_upload.storage.type === 'local') {
     const dir = path.join(settings.ep_image_upload.storage.baseFolder, context.padID);
 
-    fs.rmdir(dir, { recursive: true }, (err) => {
-        if (err) {
-            throw err;
-        }
+    fs.rmdir(dir, {recursive: true}, (err) => {
+      if (err) {
+        throw err;
+      }
     });
   }
 };
