@@ -169,7 +169,7 @@ exports.expressConfigure = (hookName, context) => {
 
 exports.padRemove = async (hookName, context) => {
   // If storageType is local, delete the folder for the images
-  if (settings.ep_image_upload.storage.type === 'local') {
+  if (settings.ep_image_upload?.storage?.type === 'local') { //eslint-disable-line parsing error
     const dir = path.join(settings.ep_image_upload.storage.baseFolder, context.padID);
 
     fs.rmdir(dir, {recursive: true}, (err) => {
