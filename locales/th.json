@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Andibecker"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "อัพโหลดภาพ",
+	"ep_image_upload.error.fileSize": "ไฟล์ใหญ่เกินไป",
+	"ep_image_upload.error.fileType": "ประเภทไฟล์ไม่ถูกต้อง"
+}

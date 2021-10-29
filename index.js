@@ -14,6 +14,7 @@ const uuid = require('uuid');
 const path = require('path');
 const mimetypes = require('mime-db');
 const url = require('url');
+const fs = require('fs');
 
 /**
  * ClientVars hook
@@ -157,4 +158,13 @@ exports.expressConfigure = (hookName, context) => {
       req.pipe(busboy);
     }
   });
+};
+
+exports.padRemove = async (hookName, context) => {
+  // If storageType is local, delete the folder for the images
+  const {ep_image_upload: {storage: {type, baseFolder} = {}} = {}} = settings;
+  if (type === 'local') {
+    const dir = path.join(baseFolder, context.padID);
+    await fs.promises.rmdir(dir, {recursive: true});
+  }
 };

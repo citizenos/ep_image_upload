@@ -25,7 +25,8 @@
         "collectContentPre": "ep_image_upload/static/js/contentCollection",
         "collectContentPost": "ep_image_upload/static/js/contentCollection",
         "ccRegisterBlockElements": "ep_image_upload/static/js/contentCollection",
-        "loadSettings": "ep_image_upload/settings"
+        "loadSettings": "ep_image_upload/settings",
+        "padRemove": "ep_image_upload/index"
       }
     }
   ]

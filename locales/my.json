@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Andibecker"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "ပုံကိုတင်ပါ",
+	"ep_image_upload.error.fileSize": "ဖိုင်ဆိုဒ်ကြီးလွန်းသည်",
+	"ep_image_upload.error.fileType": "မမှန်ကန်သောဖိုင်အမျိုးအစား"
+}

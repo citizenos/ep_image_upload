@@ -1,7 +1,7 @@
 {
   "name": "ep_image_upload",
   "description": "Add images to etherpad",
-  "version": "1.0.51",
+  "version": "1.0.63",
   "author": {
     "name": "CitizenOS",
     "email": "ilmar@citizenos.com",
@@ -9,11 +9,11 @@
   },
   "contributors": [],
   "dependencies": {
-    "busboy": "0.2.14",
+    "busboy": "0.3.1",
     "lodash": "4.17.21",
-    "mime-db": "1.33.0",
-    "stream_upload": "0.0.5",
-    "uuid": "3.2.1"
+    "mime-db": "1.49.0",
+    "stream_upload": "0.0.6",
+    "uuid": "8.3.2"
   },
   "repository": {
     "type": "git",
@@ -36,14 +36,14 @@
   "directories": {},
   "readme": "ERROR: No README data found!",
   "devDependencies": {
-    "eslint": "^7.18.0",
-    "eslint-config-etherpad": "^1.0.24",
-    "eslint-plugin-mocha": "^8.0.0",
+    "eslint": "7.32.0",
+    "eslint-config-etherpad": "2.0.0",
+    "eslint-plugin-mocha": "9.0.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prefer-arrow": "^1.2.3",
-    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-promise": "5.1.0",
     "eslint-plugin-eslint-comments": "^3.2.0",
-    "eslint-plugin-you-dont-need-lodash-underscore": "^6.10.0"
+    "eslint-plugin-you-dont-need-lodash-underscore": "^6.12.0"
   },
   "eslintConfig": {
     "root": true,
