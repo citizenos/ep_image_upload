@@ -66,13 +66,6 @@ exports.eejsBlock_body = (hookName, args, cb) => {
   return cb();
 };
 
-exports.eejsBlock_styles = (hookName, args, cb) => {
-  const style = eejs.require('ep_image_upload/templates/styles.ejs');
-  args.content += style;
-
-  return cb();
-};
-
 const drainStream = (stream) => {
   stream.on('readable', stream.read.bind(stream));
 };

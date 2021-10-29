@@ -30,7 +30,7 @@ const _isValid = (file) => {
     if (validMime === false) {
       const errorMessage = window._('ep_image_upload.error.fileType');
       $('#imageUploadModalError .error').html(errorMessage);
-      $('#imageUploadModalError').show();
+      $('#imageUploadModalError').addClass('popup-show');
 
       return false;
     }
@@ -39,7 +39,7 @@ const _isValid = (file) => {
   if (clientVars.ep_image_upload && file.size > clientVars.ep_image_upload.maxFileSize) {
     const errorMessage = window._('ep_image_upload.error.fileSize');
     $('#imageUploadModalError .error').html(errorMessage);
-    $('#imageUploadModalError').show();
+    $('#imageUploadModalError').addClass('popup-show');
 
     return false;
   }
@@ -51,7 +51,7 @@ const _isValid = (file) => {
 exports.postToolbarInit = (hook, context) => {
   const toolbar = context.toolbar;
   $('#closeErrorModalButton').on('click', () => {
-    $('#imageUploadModalError').hide();
+    $('#imageUploadModalError').removeClass('popup-show');
   });
   toolbar.registerCommand('imageUpload', () => {
     $(document).find('body').find('#imageInput').remove();
@@ -71,7 +71,7 @@ exports.postToolbarInit = (hook, context) => {
         return;
       }
       if (clientVars.ep_image_upload.storageType === 'base64') {
-        $('#imageUploadModalLoader').hide();
+        $('#imageUploadModalLoader').removeClass('popup-show');
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
@@ -87,7 +87,7 @@ exports.postToolbarInit = (hook, context) => {
 
         // add assoc key values, this will be posts values
         formData.append('file', file, file.name);
-        $('#imageUploadModalLoader').show();
+        $('#imageUploadModalLoader').addClass('popup-show');
         $.ajax({
           type: 'POST',
           url: `${clientVars.padId}/pluginfw/ep_image_upload/upload`,
@@ -97,7 +97,7 @@ exports.postToolbarInit = (hook, context) => {
             return myXhr;
           },
           success: (data) => {
-            $('#imageUploadModalLoader').hide();
+            $('#imageUploadModalLoader').removeClass('popup-show');
             context.ace.callWithAce((ace) => {
               const imageLineNr = _handleNewLines(ace);
               ace.ace_addImage(imageLineNr, data);
@@ -115,9 +115,9 @@ exports.postToolbarInit = (hook, context) => {
               errorResponse = {message: error.responseText};
             }
 
-            $('#imageUploadModalLoader').hide();
+            $('#imageUploadModalLoader').removeClass('popup-show');
             $('#imageUploadModalError .error').html(errorResponse.message);
-            $('#imageUploadModalError').show();
+            $('#imageUploadModalError').addClass('popup-show');
           },
           async: true,
           data: formData,

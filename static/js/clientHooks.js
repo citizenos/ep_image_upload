@@ -38,7 +38,10 @@ exports.aceDomLineProcessLineAttributes = (name, context) => {
   return [];
 };
 
-exports.aceEditorCSS = () => ['/ep_image_upload/static/css/ace.css'];
+exports.aceEditorCSS = () => [
+  '/ep_image_upload/static/css/ace.css',
+  '/ep_image_upload/static/css/ep_image_upload.css',
+];
 
 exports.aceInitialized = (hook, context) => {
   const editorInfo = context.editorInfo;
