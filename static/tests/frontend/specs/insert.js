@@ -10,8 +10,19 @@ describe('Image Upload', function () {
   it('Puts an image in the pad and ensure it isnt removed', async function () {
     this.timeout(10000);
     const inner$ = helper.padInner$;
-    inner$('div:eq(2)').html('hello world');
+
+    await helper.edit('hello world\n', 3);
+
+    // clear the first line
+    inner$('div').first().html('<br/>');
+
+    // wait for the edit to be accepted
+    await helper.waitForPromise(() => helper.commits.length === 2);
+
     inner$('div').first().html(`<img src="${uploadSVG}">`);
+
+    await helper.waitForPromise(() => helper.commits.length === 3);
+
     await helper.waitForPromise(() => inner$('div').first().html().indexOf(uploadSVG) !== -1, 1000);
     await helper.waitForPromise(
         () => inner$('div:eq(2)').text().indexOf('hello world') !== -1, 1000);
@@ -22,11 +33,15 @@ describe('Image Upload', function () {
     const inner$ = helper.padInner$;
 
     // puts hello world on second line
-    inner$('div:eq(1)').html('hello world');
+    await helper.edit('hello world\n', 2);
+
     await helper.waitForPromise(() => inner$('div:eq(1)').text() === 'hello world', 1000);
 
     // puts image on first line
     inner$('div').first().html(`<img src="${uploadSVG}">`);
+
+    // wait for the edit to be accepted
+    await helper.waitForPromise(() => helper.commits.length === 2);
 
     await helper.waitForPromise(() => inner$('div').first().html().indexOf(uploadSVG) !== -1, 1000);
     await helper.waitForPromise(
