@@ -47,6 +47,51 @@ const _isValid = (file) => {
   return true;
 };
 
+const uploadFile = (context, file, filename) => {
+  const formData = new FormData();
+
+  // add assoc key values, this will be posts values
+  formData.append('file', file, filename ? filename : file.name);
+  $('#imageUploadModalLoader').addClass('popup-show');
+  $.ajax({
+    type: 'POST',
+    url: `${clientVars.padId}/pluginfw/ep_image_upload/upload`,
+    xhr: () => {
+      const myXhr = $.ajaxSettings.xhr();
+
+      return myXhr;
+    },
+    success: (data) => {
+      $('#imageUploadModalLoader').removeClass('popup-show');
+      context.ace.callWithAce((ace) => {
+        const imageLineNr = _handleNewLines(ace);
+        ace.ace_addImage(imageLineNr, data);
+        ace.ace_doReturnKey();
+      }, 'img', true);
+    },
+    error: (error) => {
+      let errorResponse;
+      try {
+        errorResponse = JSON.parse(error.responseText.trim());
+        if (errorResponse.type) {
+          errorResponse.message = window._(`ep_image_upload.error.${errorResponse.type}`);
+        }
+      } catch (err) {
+        errorResponse = {message: error.responseText};
+      }
+
+      $('#imageUploadModalLoader').removeClass('popup-show');
+      $('#imageUploadModalError .error').html(errorResponse.message);
+      $('#imageUploadModalError').addClass('popup-show');
+    },
+    async: true,
+    data: formData,
+    cache: false,
+    contentType: false,
+    processData: false,
+    timeout: 60000,
+  });
+};
 
 exports.postToolbarInit = (hook, context) => {
   const toolbar = context.toolbar;
@@ -83,49 +128,7 @@ exports.postToolbarInit = (hook, context) => {
           }, 'img', true);
         };
       } else {
-        const formData = new FormData();
-
-        // add assoc key values, this will be posts values
-        formData.append('file', file, file.name);
-        $('#imageUploadModalLoader').addClass('popup-show');
-        $.ajax({
-          type: 'POST',
-          url: `${clientVars.padId}/pluginfw/ep_image_upload/upload`,
-          xhr: () => {
-            const myXhr = $.ajaxSettings.xhr();
-
-            return myXhr;
-          },
-          success: (data) => {
-            $('#imageUploadModalLoader').removeClass('popup-show');
-            context.ace.callWithAce((ace) => {
-              const imageLineNr = _handleNewLines(ace);
-              ace.ace_addImage(imageLineNr, data);
-              ace.ace_doReturnKey();
-            }, 'img', true);
-          },
-          error: (error) => {
-            let errorResponse;
-            try {
-              errorResponse = JSON.parse(error.responseText.trim());
-              if (errorResponse.type) {
-                errorResponse.message = window._(`ep_image_upload.error.${errorResponse.type}`);
-              }
-            } catch (err) {
-              errorResponse = {message: error.responseText};
-            }
-
-            $('#imageUploadModalLoader').removeClass('popup-show');
-            $('#imageUploadModalError .error').html(errorResponse.message);
-            $('#imageUploadModalError').addClass('popup-show');
-          },
-          async: true,
-          data: formData,
-          cache: false,
-          contentType: false,
-          processData: false,
-          timeout: 60000,
-        });
+        uploadFile(context, file);
       }
     });
     $(document).find('body').find('#imageInput').trigger('click');
