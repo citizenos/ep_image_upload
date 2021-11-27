@@ -46,6 +46,7 @@ const _isValid = (file) => {
 
   return true;
 };
+exports._isValid = _isValid;
 
 const uploadFile = (context, file, filename) => {
   const formData = new FormData();
@@ -92,6 +93,7 @@ const uploadFile = (context, file, filename) => {
     timeout: 60000,
   });
 };
+exports.uploadFile = uploadFile;
 
 exports.postToolbarInit = (hook, context) => {
   const toolbar = context.toolbar;
