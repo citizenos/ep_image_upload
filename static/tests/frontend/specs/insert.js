@@ -1,13 +1,19 @@
 'use strict';
 
 describe('Image Upload', function () {
+  let storageType;
+
   // create a new pad before each test run
-  beforeEach(function (cb) {
-    helper.newPad(cb);
+  beforeEach(async function () {
+    await helper.aNewPad();
+    storageType = helper.padChrome$.window.clientVars.ep_image_upload &&
+      helper.padChrome$.window.clientVars.ep_image_upload.storageType;
     this.timeout(60000);
   });
 
   it('Puts an image in the pad and ensure it isnt removed', async function () {
+    if (storageType !== 'base64') this.skip();
+
     this.timeout(10000);
     const inner$ = helper.padInner$;
 
@@ -29,6 +35,8 @@ describe('Image Upload', function () {
   });
 
   it('Puts an image in the pad and next line is not modified', async function () {
+    if (storageType !== 'base64') this.skip();
+
     this.timeout(10000);
     const inner$ = helper.padInner$;
 
