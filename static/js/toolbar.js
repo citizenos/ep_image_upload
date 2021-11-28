@@ -16,6 +16,7 @@ const _handleNewLines = (ace) => {
 const _isValid = (file) => {
   const mimedb = clientVars.ep_image_upload.mimeTypes;
   const mimeType = mimedb[file.type];
+  const extension = mimeType ? mimeType.extensions[0] : null;
   let validMime = null;
   if (clientVars.ep_image_upload && clientVars.ep_image_upload.fileTypes) {
     validMime = false;
@@ -44,7 +45,7 @@ const _isValid = (file) => {
     return false;
   }
 
-  return true;
+  return extension;
 };
 exports._isValid = _isValid;
 
