@@ -1,20 +1,98 @@
 'use strict';
 
+/**
+ * @param {number} line the line of the image
+ * @returns {string} embedded image data
+ */
+const fetchImageFromLine = async (line) => {
+  let imageUrl;
+  const inner$ = helper.padInner$;
+
+  // wait for img tag to appear
+  await helper.waitForPromise(() => {
+    const image = inner$(`div:eq(${line})`)[0].querySelector('img');
+    if (image) {
+      imageUrl = image.getAttribute('src');
+      if (/^http/.test(imageUrl)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }, 2000);
+
+  // get image
+  let embeddedImage;
+  $.ajax({
+    type: 'GET',
+    url: imageUrl,
+    success: (data) => {
+      embeddedImage = data;
+    },
+    error: (error) => {
+      throw error;
+    },
+    cache: false,
+    processData: false,
+    dataType: 'text',
+  });
+
+  // size of uploadSVG blob
+  await helper.waitForPromise(() => embeddedImage && embeddedImage.length === 214690);
+
+  return embeddedImage;
+};
+
 describe('Image Upload', function () {
+  let storageType;
+
   // create a new pad before each test run
-  beforeEach(function (cb) {
-    helper.newPad(cb);
+  beforeEach(async function () {
+    await helper.aNewPad();
+    storageType = helper.padChrome$.window.clientVars.ep_image_upload &&
+      helper.padChrome$.window.clientVars.ep_image_upload.storageType;
     this.timeout(60000);
   });
 
   it('Puts an image in the pad and ensure it isnt removed', async function () {
     this.timeout(10000);
     const inner$ = helper.padInner$;
-    inner$('div:eq(2)').html('hello world');
+
+    await helper.edit('hello world\n', 3);
+
+    // clear the first line
+    inner$('div').first().html('<br/>');
+
+    // wait for the edit to be accepted
+    await helper.waitForPromise(() => helper.commits.length === 2);
+
+    // in case of copy&paste the image is placed at the cursor position
+    // let's put the cursor onto the first line
+    const firstLine = inner$('div:eq(0)');
+    helper.selectLines(firstLine, firstLine, 1, 1);
+
     inner$('div').first().html(`<img src="${uploadSVG}">`);
-    await helper.waitForPromise(() => inner$('div').first().html().indexOf(uploadSVG) !== -1, 1000);
-    await helper.waitForPromise(
-        () => inner$('div:eq(2)').text().indexOf('hello world') !== -1, 1000);
+
+    await helper.waitForPromise(() => helper.commits.length === 3);
+
+    if (storageType === 'base64') {
+      await helper.waitForPromise(() => inner$('div:eq(0)').html().indexOf(uploadSVG) !== -1, 1000);
+      await helper.waitForPromise(
+          () => inner$('div:eq(2)').text().indexOf('hello world') !== -1, 1000);
+    } else {
+      const image = await fetchImageFromLine(0);
+      const uploadedSVGData = uploadSVG.match(/^data:([^;]+);base64,(.*)/);
+
+      expect(window.atob(uploadedSVGData[2])).to.be(image);
+
+      // ensure the image is actually displayed
+      const height = window.getComputedStyle(inner$('div:eq(0)')[0].querySelector('img')).height;
+      expect(parseInt(height)).to.be.above(200);
+
+      // uploadFile calls `ace.ace_doReturnKey()` so there is an additional newline
+      await helper.waitForPromise(
+          () => inner$('div:eq(3)').text().indexOf('hello world') !== -1, 1000);
+    }
   });
 
   it('Puts an image in the pad and next line is not modified', async function () {
@@ -22,15 +100,39 @@ describe('Image Upload', function () {
     const inner$ = helper.padInner$;
 
     // puts hello world on second line
-    inner$('div:eq(1)').html('hello world');
+    await helper.edit('hello world\n', 2);
+
     await helper.waitForPromise(() => inner$('div:eq(1)').text() === 'hello world', 1000);
+
+    // in case of copy&paste the image is placed at the cursor position
+    // let's put the cursor onto the first line
+    const firstLine = inner$('div:eq(0)');
+    helper.selectLines(firstLine, firstLine, 1, 1);
 
     // puts image on first line
     inner$('div').first().html(`<img src="${uploadSVG}">`);
 
-    await helper.waitForPromise(() => inner$('div').first().html().indexOf(uploadSVG) !== -1, 1000);
-    await helper.waitForPromise(
-        () => inner$('div:eq(1)').text().indexOf('hello world') !== -1, 1000);
+    // wait for the edit to be accepted
+    await helper.waitForPromise(() => helper.commits.length === 2);
+
+    if (storageType === 'base64') {
+      await helper.waitForPromise(() => inner$('div:eq(0)').html().indexOf(uploadSVG) !== -1, 1000);
+      await helper.waitForPromise(
+          () => inner$('div:eq(1)').text().indexOf('hello world') !== -1, 1000);
+    } else {
+      const image = await fetchImageFromLine(0);
+      const uploadedSVGData = uploadSVG.match(/^data:([^;]+);base64,(.*)/);
+
+      expect(window.atob(uploadedSVGData[2])).to.be(image);
+
+      // ensure the image is actually displayed
+      const height = window.getComputedStyle(inner$('div:eq(0)')[0].querySelector('img')).height;
+      expect(parseInt(height)).to.be.above(200);
+
+      // uploadFile calls `ace.ace_doReturnKey()` so there is an additional newline
+      await helper.waitForPromise(
+          () => inner$('div:eq(2)').text().indexOf('hello world') !== -1, 1000);
+    }
   });
 });
 
