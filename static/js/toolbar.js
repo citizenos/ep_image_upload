@@ -17,6 +17,8 @@ const _isValid = (file) => {
   const mimedb = clientVars.ep_image_upload.mimeTypes;
   const mimeType = mimedb[file.type];
   let validMime = null;
+  const errorTitle = html10n.get('ep_image_upload.error.title');
+
   if (clientVars.ep_image_upload && clientVars.ep_image_upload.fileTypes) {
     validMime = false;
     if (mimeType && mimeType.extensions) {
@@ -28,18 +30,17 @@ const _isValid = (file) => {
       }
     }
     if (validMime === false) {
-      const errorMessage = window._('ep_image_upload.error.fileType');
-      $('#imageUploadModalError .error').html(errorMessage);
-      $('#imageUploadModalError').addClass('popup-show');
+      const errorMessage = html10n.get('ep_image_upload.error.fileType');
+      $.gritter.add({title: errorTitle, text: errorMessage, sticky: true, class_name: 'error'});
 
       return false;
     }
   }
 
   if (clientVars.ep_image_upload && file.size > clientVars.ep_image_upload.maxFileSize) {
-    const errorMessage = window._('ep_image_upload.error.fileSize');
-    $('#imageUploadModalError .error').html(errorMessage);
-    $('#imageUploadModalError').addClass('popup-show');
+    const allowedSize = (clientVars.ep_image_upload.maxFileSize / 1000000);
+    const errorText = html10n.get('ep_image_upload.error.fileSize', {maxallowed: allowedSize});
+    $.gritter.add({title: errorTitle, text: errorText, sticky: true, class_name: 'error'});
 
     return false;
   }
@@ -50,9 +51,6 @@ const _isValid = (file) => {
 
 exports.postToolbarInit = (hook, context) => {
   const toolbar = context.toolbar;
-  $('#closeErrorModalButton').on('click', () => {
-    $('#imageUploadModalError').removeClass('popup-show');
-  });
   toolbar.registerCommand('imageUpload', () => {
     $(document).find('body').find('#imageInput').remove();
     const fileInputHtml = `<input
@@ -109,15 +107,15 @@ exports.postToolbarInit = (hook, context) => {
             try {
               errorResponse = JSON.parse(error.responseText.trim());
               if (errorResponse.type) {
-                errorResponse.message = window._(`ep_image_upload.error.${errorResponse.type}`);
+                errorResponse.message = `ep_image_upload.error.${errorResponse.type}`;
               }
             } catch (err) {
               errorResponse = {message: error.responseText};
             }
+            const errorTitle = html10n.get('ep_image_upload.error.title');
+            const errorText = html10n.get(errorResponse.message);
 
-            $('#imageUploadModalLoader').removeClass('popup-show');
-            $('#imageUploadModalError .error').html(errorResponse.message);
-            $('#imageUploadModalError').addClass('popup-show');
+            $.gritter.add({title: errorTitle, text: errorText, sticky: true, class_name: 'error'});
           },
           async: true,
           data: formData,
