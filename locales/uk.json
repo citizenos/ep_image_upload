@@ -5,6 +5,7 @@
 		]
 	},
 	"ep_image_upload.toolbar.image_upload.title": "Завантажити зображення",
-	"ep_image_upload.error.fileSize": "Файл завеликий",
-	"ep_image_upload.error.fileType": "Недійсний тип файлу"
+	"ep_image_upload.error.title": "Помилка",
+	"ep_image_upload.error.fileSize": "Файл завеликий! Максимально дозволений розмір – {{maxallowed}} МБ.",
+	"ep_image_upload.error.fileType": "Недійсний тип файлу!"
 }

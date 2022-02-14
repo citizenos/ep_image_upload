@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"NimaBagheriWP"
+		]
+	},
+	"ep_image_upload.error.title": "خطا",
+	"ep_image_upload.error.fileSize": "فایل بسیار بزرگ است! حداکثر حجم مجاز {{maxallowed}} مگابایت است.",
+	"ep_image_upload.error.fileType": "نوع فایل نامعتبر است!"
+}

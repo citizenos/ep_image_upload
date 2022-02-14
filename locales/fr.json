@@ -5,6 +5,7 @@
 		]
 	},
 	"ep_image_upload.toolbar.image_upload.title": "Téléverser une image",
-	"ep_image_upload.error.fileSize": "Le fichier est trop gros.",
-	"ep_image_upload.error.fileType": "Type de fichier incorrect"
+	"ep_image_upload.error.title": "Erreur",
+	"ep_image_upload.error.fileSize": "Le fichier est trop gros ! La taille maximale autorisée est de {{maxallowed}} Mio.",
+	"ep_image_upload.error.fileType": "Type de fichier incorrect !"
 }

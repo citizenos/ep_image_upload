@@ -2,10 +2,12 @@
 	"@metadata": {
 		"authors": [
 			"Kareyac",
-			"Okras"
+			"Okras",
+			"Pacha Tchernof"
 		]
 	},
 	"ep_image_upload.toolbar.image_upload.title": "Загрузить изображение",
-	"ep_image_upload.error.fileSize": "Файл слишком большой",
-	"ep_image_upload.error.fileType": "Неверный тип файла"
+	"ep_image_upload.error.title": "Ошибка",
+	"ep_image_upload.error.fileSize": "Файл слишком большой! Максимально допустимый размер составляет {{maxallowed}} МБ.",
+	"ep_image_upload.error.fileType": "Недействительный тип файла!"
 }

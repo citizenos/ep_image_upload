@@ -5,6 +5,7 @@
 		]
 	},
 	"ep_image_upload.toolbar.image_upload.title": "Подигни слика",
-	"ep_image_upload.error.fileSize": "Податотеката е преголема",
-	"ep_image_upload.error.fileType": "Неважечки податотечен тип"
+	"ep_image_upload.error.title": "Грешка",
+	"ep_image_upload.error.fileSize": "Податотеката е преголема! Дозволено е највеќе {{maxallowed}} МБ.",
+	"ep_image_upload.error.fileType": "Неважечки податотечен тип!"
 }
