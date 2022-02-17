@@ -5,5 +5,7 @@
 		]
 	},
 	"ep_image_upload.toolbar.image_upload.title": "Tallenna kuva",
-	"ep_image_upload.error.fileSize": "Tiedosto on liian suuri"
+	"ep_image_upload.error.title": "Virhe",
+	"ep_image_upload.error.fileSize": "Tiedosto on liian suuri",
+	"ep_image_upload.error.fileType": "Virheellinen tiedostotyyppi!"
 }
