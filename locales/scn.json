@@ -5,6 +5,7 @@
 		]
 	},
 	"ep_image_upload.toolbar.image_upload.title": "Càrrica mmàggini",
+	"ep_image_upload.error.title": "Erruri",
 	"ep_image_upload.error.fileSize": "Lu file è troppu granni",
 	"ep_image_upload.error.fileType": "Tipu di file nun vàlidu"
 }
