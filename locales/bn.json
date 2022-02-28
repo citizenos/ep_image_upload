@@ -1,10 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"Yahya"
+			"Yahya",
+			"আফতাবুজ্জামান"
 		]
 	},
 	"ep_image_upload.toolbar.image_upload.title": "চিত্র আপলোড",
+	"ep_image_upload.error.title": "ত্রুটি",
 	"ep_image_upload.error.fileSize": "ফাইল খুবই বড়",
 	"ep_image_upload.error.fileType": "অকার্যকর ফাইল টাইপ"
 }
