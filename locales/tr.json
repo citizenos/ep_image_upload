@@ -1,10 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Joseph"
+			"Joseph",
+			"SaldırganSincap"
 		]
 	},
 	"ep_image_upload.toolbar.image_upload.title": "Resim yükle",
-	"ep_image_upload.error.fileSize": "Dosya çok büyük",
-	"ep_image_upload.error.fileType": "Geçersiz dosya türü"
+	"ep_image_upload.error.fileSize": "Dosya çok büyük! İzin verilen maksimum boyut {{maxallowed}} MB'dir.",
+	"ep_image_upload.error.fileType": "Geçersiz dosya türü!"
 }
