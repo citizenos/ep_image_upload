@@ -13,7 +13,12 @@ const image = {
 
 exports.aceAttribsToClasses = (name, context) => {
   if (context.key === 'img') {
-    return [`img:${context.value}`];
+    let imgUrl = context.value;
+    if (context.value.indexOf('<img') === 0) {
+      const urlMatch = (/src\s*=\s*"([^\s]+\/\/[^/]+.\/[^\s]+\.\w*)/gi).exec(context.value);
+      imgUrl = urlMatch[1];
+    }
+    return [`img:${imgUrl}`];
   }
 };
 

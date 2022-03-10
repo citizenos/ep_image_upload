@@ -9,6 +9,10 @@ const _analyzeLine = (alineAttrs, apool) => {
     if (opIter.hasNext()) {
       const op = opIter.next();
       image = Changeset.opAttributeValue(op, 'img', apool);
+      if (image.indexOf('<img') === 0) {
+        const urlMatch = (/src\s*=\s*"([^\s]+\/\/[^/]+.\/[^\s]+\.\w*)/gi).exec(image);
+        image = urlMatch[1];
+      }
     }
   }
 
