@@ -5,6 +5,7 @@
 		]
 	},
 	"ep_image_upload.toolbar.image_upload.title": "上傳圖片",
-	"ep_image_upload.error.fileSize": "檔案太大",
-	"ep_image_upload.error.fileType": "無效檔案類型"
+	"ep_image_upload.error.title": "錯誤",
+	"ep_image_upload.error.fileSize": "檔案太大！最多允許的大小為 {{maxallowed}} MB。",
+	"ep_image_upload.error.fileType": "無效檔案類型！"
 }
