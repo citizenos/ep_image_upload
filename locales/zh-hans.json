@@ -2,10 +2,12 @@
 	"@metadata": {
 		"authors": [
 			"GuoPC",
+			"StarrySky",
 			"Zhang8569"
 		]
 	},
 	"ep_image_upload.toolbar.image_upload.title": "上传图片",
+	"ep_image_upload.error.title": "错误",
 	"ep_image_upload.error.fileSize": "文件过大！最大允许大小为 {{maxallowed}} MB。",
 	"ep_image_upload.error.fileType": "无效的文件格式！"
 }
