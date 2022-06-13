@@ -1,12 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
+			"Brettchenweber",
 			"FF-11",
 			"FF11",
 			"ThisCarthing"
 		]
 	},
 	"ep_image_upload.toolbar.image_upload.title": "Bild hochladen",
+	"ep_image_upload.error.title": "Fehler",
 	"ep_image_upload.error.fileSize": "Datei ist zu groß! Die maximal zulässige Größe beträgt {{maxallowed}} MB.",
 	"ep_image_upload.error.fileType": "Ungültiger Dateityp!"
 }
