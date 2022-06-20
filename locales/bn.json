@@ -1,12 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
+			"Joysriramsarkar.manathetiger56",
 			"Yahya",
 			"আফতাবুজ্জামান"
 		]
 	},
-	"ep_image_upload.toolbar.image_upload.title": "চিত্র আপলোড",
+	"ep_image_upload.toolbar.image_upload.title": "চিত্র আপলোড করুন",
 	"ep_image_upload.error.title": "ত্রুটি",
-	"ep_image_upload.error.fileSize": "ফাইল খুবই বড়",
-	"ep_image_upload.error.fileType": "অকার্যকর ফাইল টাইপ"
+	"ep_image_upload.error.fileSize": "ফাইলটি খুবই বড়ো! সর্বনিম্ন {{maxallowed}} এমবি গ্রহণযোগ্য।",
+	"ep_image_upload.error.fileType": "অবৈধ ফাইল ধরন!"
 }
