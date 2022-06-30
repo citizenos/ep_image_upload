@@ -8,6 +8,6 @@
 	},
 	"ep_image_upload.toolbar.image_upload.title": "চিত্র আপলোড করুন",
 	"ep_image_upload.error.title": "ত্রুটি",
-	"ep_image_upload.error.fileSize": "ফাইলটি খুবই বড়ো! সর্বনিম্ন {{maxallowed}} এমবি গ্রহণযোগ্য।",
-	"ep_image_upload.error.fileType": "অবৈধ ফাইল ধরন!"
+	"ep_image_upload.error.fileSize": "ফাইলটি খুবই বড়! সর্বনিম্ন {{maxallowed}} এমবি গ্রহণযোগ্য।",
+	"ep_image_upload.error.fileType": "ফাইল ধরন অবৈধ!"
 }
