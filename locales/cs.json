@@ -7,6 +7,6 @@
 	},
 	"ep_image_upload.toolbar.image_upload.title": "Nahrát obrázek",
 	"ep_image_upload.error.title": "Chyba",
-	"ep_image_upload.error.fileSize": "Soubor je příliš velký",
+	"ep_image_upload.error.fileSize": "Soubor je příliš velký! Maximální povolená velikost je {{maxallowed}} MB.",
 	"ep_image_upload.error.fileType": "Neplatný typ souboru!"
 }
