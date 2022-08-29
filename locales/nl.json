@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Spinster"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "Afbeelding uploaden",
+	"ep_image_upload.error.title": "Fout",
+	"ep_image_upload.error.fileSize": "Bestand is te groot! Maximaal toegestane grootte is {{maxallowed}} MB.",
+	"ep_image_upload.error.fileType": "Ongeldig bestandstype!"
+}
