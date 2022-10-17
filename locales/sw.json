@@ -1,10 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Andibecker"
+			"Andibecker",
+			"Wangombe"
 		]
 	},
 	"ep_image_upload.toolbar.image_upload.title": "Pakia picha",
-	"ep_image_upload.error.fileSize": "Faili ni kubwa mno",
+	"ep_image_upload.error.fileSize": "Faili ni kubwa mno! Ukubwa wa juu unaoruhusiwa ni MB {{maxallowed}",
 	"ep_image_upload.error.fileType": "Aina ya faili si sahihi"
 }
