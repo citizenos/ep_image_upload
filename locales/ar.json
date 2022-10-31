@@ -1,9 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
+			"Meno25",
 			"محمد أحمد عبد الفتاح"
 		]
 	},
 	"ep_image_upload.toolbar.image_upload.title": "ارفع صورة",
-	"ep_image_upload.error.fileSize": "الملف ضخم جدًّا"
+	"ep_image_upload.error.title": "خطأ",
+	"ep_image_upload.error.fileSize": "الملف كبير جدا! الحجم الأقصى المسموح به هو {{maxallowed}} ميغا بايت.",
+	"ep_image_upload.error.fileType": "نوع الملف غير صالح!"
 }
