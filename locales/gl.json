@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ghose"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "Subir imaxe",
+	"ep_image_upload.error.title": "Erro",
+	"ep_image_upload.error.fileSize": "O ficheiro é demasiado grande! O tamaño máximo permitido é {{maxallowed}} MB.",
+	"ep_image_upload.error.fileType": "Tipo de ficheiro non válido!"
+}

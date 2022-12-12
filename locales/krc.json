@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Къарачайлы"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "Суратны джюкле",
+	"ep_image_upload.error.title": "Халат",
+	"ep_image_upload.error.fileSize": "Файл асыры уллуду! Максимум ёлчем {{maxallowed}} МБ болургъа керекди.",
+	"ep_image_upload.error.fileType": "Джараусуз файл тип!"
+}
