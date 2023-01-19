@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"McDutchie"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "Incargar imagine",
+	"ep_image_upload.error.title": "Error",
+	"ep_image_upload.error.fileSize": "File es troppo grande! Grandor maxime autorisate es {{maxallowed}} MB.",
+	"ep_image_upload.error.fileType": "Typo de file non valide!"
+}
