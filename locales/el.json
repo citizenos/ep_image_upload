@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Norhorn"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "Μεταφόρτωση εικόνας",
+	"ep_image_upload.error.title": "Σφάλμα",
+	"ep_image_upload.error.fileSize": "Το αρχείο είναι πολύ μεγάλο! Το μέγιστο επιτρεπόμενο μέγεθος είναι {{maxallowed}} MB.",
+	"ep_image_upload.error.fileType": "Μη έγκυρος τύπος αρχείου!"
+}

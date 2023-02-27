@@ -1,9 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"Robby"
+			"Robby",
+			"Volvox"
 		]
 	},
 	"ep_image_upload.toolbar.image_upload.title": "Bild eroplueden",
-	"ep_image_upload.error.title": "Feeler"
+	"ep_image_upload.error.title": "Feeler",
+	"ep_image_upload.error.fileSize": "De Fichier ass ze grouss! Déi maximal erlaabte Gréisst ass {{maxallowed}} MB.",
+	"ep_image_upload.error.fileType": "Ongültegt Dateformat!"
 }
