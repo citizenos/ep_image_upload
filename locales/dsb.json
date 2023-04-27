@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Michawiki"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "Wobraz nagraś",
+	"ep_image_upload.error.title": "Zmólka",
+	"ep_image_upload.error.fileSize": "Dataja jo pśewjelika! Maksimalna dowólona wjelikosć jo {{maxallowed}} MB.",
+	"ep_image_upload.error.fileType": "Njepłaśiwy datajowy typ!"
+}
