@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ibrahima Malal Sarr"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "Yollu natal",
+	"ep_image_upload.error.title": "Juumre",
+	"ep_image_upload.error.fileSize": "Fiilde ena mawni haa ɓurti! Kaaɗtudi ɓetol njamiraandi ko {{maxallowed}} MB.",
+	"ep_image_upload.error.fileType": "Fannu fiilde jaalɗaani!"
+}
