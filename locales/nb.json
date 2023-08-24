@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jon Harald Søby"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "Last opp bilde",
+	"ep_image_upload.error.title": "Feil",
+	"ep_image_upload.error.fileSize": "Fila er for stor! Den maksimale tillatte størrelsen er {{maxallowed}} MB.",
+	"ep_image_upload.error.fileType": "Ugyldig filtype!"
+}
