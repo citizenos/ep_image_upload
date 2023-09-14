@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"TerranBoy"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "بارکردن وێنە",
+	"ep_image_upload.error.title": "هەڵە",
+	"ep_image_upload.error.fileType": "جوور پەڕگە نادرسە!"
+}
