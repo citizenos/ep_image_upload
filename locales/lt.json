@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Nokeoo"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "Įkelti paveikslėlį",
+	"ep_image_upload.error.title": "Klaida",
+	"ep_image_upload.error.fileSize": "Failas per didelis! Maksimalus leidžiamas dydis yra {{maxallowed}} MB.",
+	"ep_image_upload.error.fileType": "Negalimas failo tipas!"
+}
