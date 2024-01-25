@@ -5,6 +5,7 @@
 		]
 	},
 	"ep_image_upload.toolbar.image_upload.title": "Careche l'immaggine",
-	"ep_image_upload.error.fileSize": "File troppe gruèsse",
-	"ep_image_upload.error.fileType": "Tipe de fail non valide"
+	"ep_image_upload.error.title": "Errore",
+	"ep_image_upload.error.fileSize": "File troppe gruèsse! 'A dimenzione massime permesse jè {{maxallowed}} MB.",
+	"ep_image_upload.error.fileType": "Tipe de fail non valide!"
 }
