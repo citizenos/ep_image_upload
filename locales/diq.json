@@ -1,8 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
+			"GolyatGeri",
 			"Mirzali"
 		]
 	},
-	"ep_image_upload.toolbar.image_upload.title": "Resım Bar ke"
+	"ep_image_upload.toolbar.image_upload.title": "Resım Bar ke",
+	"ep_image_upload.error.title": "Xeta",
+	"ep_image_upload.error.fileSize": "Dosya zafê gırsa! Mısade deyen ebat {{maxallowed}} MB o",
+	"ep_image_upload.error.fileType": "Nêraverde tora dosya!"
 }
