@@ -1,9 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
+			"Darafsh",
 			"NimaBagheriWP"
 		]
 	},
+	"ep_image_upload.toolbar.image_upload.title": "بارگذاری تصویر",
 	"ep_image_upload.error.title": "خطا",
 	"ep_image_upload.error.fileSize": "فایل بسیار بزرگ است! حداکثر حجم مجاز {{maxallowed}} مگابایت است.",
 	"ep_image_upload.error.fileType": "نوع فایل نامعتبر است!"
