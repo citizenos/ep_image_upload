@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Atriwidada"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "Unggah gambar",
+	"ep_image_upload.error.title": "Galat",
+	"ep_image_upload.error.fileSize": "Berkas terlalu besar! Ukuran maksimum yang diizinkan adalah {{maxallowed}} MB.",
+	"ep_image_upload.error.fileType": "Tipe berkas tidak valid!"
+}
