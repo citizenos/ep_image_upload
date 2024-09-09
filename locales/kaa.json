@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Inabat Allanova"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "Súwret júklew",
+	"ep_image_upload.error.title": "Qátelik",
+	"ep_image_upload.error.fileSize": "Fayl dım úlken! Ruxsat etilgen maksimal ólshem: {{maxallowed}} MB.",
+	"ep_image_upload.error.fileType": "Jaramsız fayl tipi!"
+}
