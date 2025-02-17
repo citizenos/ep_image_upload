@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Borichèt"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "Carié na plancia",
+	"ep_image_upload.error.title": "Eror",
+	"ep_image_upload.error.fileSize": "L'archivi a l'é tròp gròss! La taja màssima consentìa a l'é ëd {{maxallowed}} Mo.",
+	"ep_image_upload.error.fileType": "Sòrt d'archivi nen bon-a!"
+}
