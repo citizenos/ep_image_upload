@@ -1,10 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
+			"Lhanars",
 			"Quentí"
 		]
 	},
 	"ep_image_upload.toolbar.image_upload.title": "Enviar imatge",
 	"ep_image_upload.error.fileSize": "Lo fichièr es tròp grand.",
-	"ep_image_upload.error.fileType": "Tipe de fichièr pas valid"
+	"ep_image_upload.error.fileType": "Tipe de fichièr non valid"
 }
