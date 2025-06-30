@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ovruni"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "Subir imagen",
+	"ep_image_upload.error.title": "Error",
+	"ep_image_upload.error.fileSize": "¡El archivo es demasiado grande! El tamaño máximo permitido es {{maxallowed}} MB.",
+	"ep_image_upload.error.fileType": "¡Tipo de archivo no válido!"
+}

@@ -1,10 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
+			"O andras",
 			"Unamane"
 		]
 	},
 	"ep_image_upload.toolbar.image_upload.title": "Enviar imagem",
-	"ep_image_upload.error.fileSize": "O ficheiro é demasiado grande",
-	"ep_image_upload.error.fileType": "O tipo de ficheiro não é válido"
+	"ep_image_upload.error.fileSize": "O ficheiro é demasiado grande! O tamanho máximo permitido é de {{maxallowed}} MB.",
+	"ep_image_upload.error.fileType": "Tipo de ficheiro inválido!"
 }
