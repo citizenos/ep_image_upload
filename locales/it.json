@@ -1,10 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
+			"Albano",
 			"Beta16"
 		]
 	},
 	"ep_image_upload.toolbar.image_upload.title": "Carica immagine",
+	"ep_image_upload.error.title": "Errore",
 	"ep_image_upload.error.fileSize": "File troppo grande! La dimensione massima consentita è di {{maxallowed}} MB.",
 	"ep_image_upload.error.fileType": "Tipo di file non valido!"
 }
