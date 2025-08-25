@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"شاه زمان پټان"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "انځور راپورته‌کول",
+	"ep_image_upload.error.title": "تېروتنه",
+	"ep_image_upload.error.fileSize": "دوتنه ډېره لويه ده! وروستۍ پرېښول کېدونکې کچه {{maxallowed}} اېم‌بي ده.",
+	"ep_image_upload.error.fileType": "د دوتنې ډول ناسم دی!"
+}
