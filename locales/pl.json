@@ -1,10 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"AOla333"
+			"AOla333",
+			"Usagi.02808"
 		]
 	},
+	"ep_image_upload.toolbar.image_upload.title": "Prześlij grafikę",
 	"ep_image_upload.error.title": "Błąd",
-	"ep_image_upload.error.fileSize": "Plik jest za duży! Maksymalny dozwolony rozmiar jest {{maxallowed}} MB.",
+	"ep_image_upload.error.fileSize": "Plik jest za duży! Maksymalny dozwolony rozmiar to {{maxallowed}} MB.",
 	"ep_image_upload.error.fileType": "Nieprawidłowy typ pliku!"
 }
