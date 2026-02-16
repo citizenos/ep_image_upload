@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Peterleth",
+			"Saederup92"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "Upload billede",
+	"ep_image_upload.error.title": "Fejl",
+	"ep_image_upload.error.fileSize": "Filen er for stor! Maksimal tilladt størrelse er {{maxallowed}} MB.",
+	"ep_image_upload.error.fileType": "Ugyldig filtype!"
+}
