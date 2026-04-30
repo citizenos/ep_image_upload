@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ucukor"
+		]
+	},
+	"ep_image_upload.toolbar.image_upload.title": "Даслаць выяву",
+	"ep_image_upload.error.title": "Памылка",
+	"ep_image_upload.error.fileType": "Няслушны тып файлу!"
+}
